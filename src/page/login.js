@@ -1,7 +1,6 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
-import MainLayout from "../components/layout";
 import '../css/login.css';
 
 
@@ -11,7 +10,6 @@ function Login() {
       };
 
     return (
-        <MainLayout>
             <div className="background">
                 <div className="login-card">
                     <h1>电子书城</h1>  
@@ -60,7 +58,6 @@ function Login() {
                     </Form>
                 </div>
             </div>
-        </MainLayout>
     );
 }
 

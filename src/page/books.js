@@ -1,6 +1,5 @@
 import { List, Pagination } from 'antd';
 import BookCard from '../components/card';
-import MainLayout from "../components/layout";
 import "../css/books.css";
 
 
@@ -100,7 +99,6 @@ function Books() {
       ];
 
     return (
-        <MainLayout>
           <div className="background">    
             <div className='book-list-container'>
               <List
@@ -118,7 +116,6 @@ function Books() {
               <Pagination simple defaultCurrent={1} total={50} />
             </div>
           </div>
-        </MainLayout>  
     );
 }
 
