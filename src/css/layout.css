@@ -1,0 +1,14 @@
+.layout{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+Header{
+    background-color:white !important;
+}
+
+Footer{
+    background-color: white !important;
+    text-align: center;
+}

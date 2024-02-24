@@ -1,0 +1,47 @@
+
+.background {
+  background: linear-gradient(180deg,  #87CEEB,#0000FF);
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    height: calc(100vh - 64.8px - 66.4px)
+}
+
+.login-card{
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    padding: 40px;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+}
+
+.input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ddd; 
+}
+
+a{
+  font-size: 16px;
+}
+
+Button{
+    width: 100%;
+    font-size: 16px !important;
+    cursor: pointer;  
+}
+
+.remember-me{
+  float:left;
+  font-size: 16px;
+}
+
+.forget-password {
+  float: right;
+}
