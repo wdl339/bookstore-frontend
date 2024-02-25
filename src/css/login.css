@@ -1,6 +1,6 @@
 
-.background {
-  background: linear-gradient(180deg,  #87CEEB,#0000FF);
+.login-background {
+    background: linear-gradient(180deg,  #87CEEB,#0000FF);
     text-align: center;
     justify-content: center;
     display: flex;

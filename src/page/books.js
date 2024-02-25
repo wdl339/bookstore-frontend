@@ -1,7 +1,7 @@
-import { List, Pagination } from 'antd';
-import BookCard from '../components/card';
-import "../css/books.css";
-
+import { List } from 'antd';
+import Search from 'antd/es/input/Search';
+import BookCard from '../components/book_card';
+import "../css/global.css";
 
 function Books() {
 
@@ -45,66 +45,22 @@ function Books() {
             title: 'Title 8',
             description: 'Description 8',
             cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 9',
-            description: 'Description 9',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 10',
-            description: 'Description 10',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 11',
-            description: 'Description 11',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 12',
-            description: 'Description 12',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 13',
-            description: 'Description 13',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 14',
-            description: 'Description 14',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 15',
-            description: 'Description 15',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 16',
-            description: 'Description 16',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 17',
-            description: 'Description 17',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-        },
-        {
-            title: 'Title 18',
-            description: 'Description 18',
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
         }
       ];
 
     return (
-          <div className="background">    
-            <div className='book-list-container'>
+          <div className="content-background">    
+            <div className='content-container'>
+              <Search 
+                  placeholder="输入书名查询"
+                  allowClear
+                  enterButton="搜索"
+                  size="large"
+              />
               <List
                   grid={{
                   gutter: 32,
-                  column: 4
+                  column: 5
                   }}
                   dataSource={data}
                   renderItem={(item) => (
@@ -112,8 +68,8 @@ function Books() {
                       <BookCard book={item}/>
                   </List.Item>
                   )}
+                  pagination={{ pageSize: 10 , position: 'bottom', align: 'center'}}
               />
-              <Pagination simple defaultCurrent={1} total={50} />
             </div>
           </div>
     );

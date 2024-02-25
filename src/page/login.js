@@ -10,7 +10,7 @@ function Login() {
       };
 
     return (
-            <div className="background">
+            <div className="login-background">
                 <div className="login-card">
                     <h1>电子书城</h1>  
                     <Form name="normal_login" initialValues={{remember: true,}} onFinish={onFinish}>

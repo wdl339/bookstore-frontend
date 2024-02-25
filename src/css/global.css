@@ -1,0 +1,21 @@
+.content-background {
+    background: linear-gradient(180deg,  #87CEEB,#0000FF);
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    min-height: calc(100vh - 64.8px - 66.4px);
+}
+
+.content-container{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    width: 90%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    gap: 20px;
+}
