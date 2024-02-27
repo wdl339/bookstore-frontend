@@ -1,34 +1,31 @@
 import { Button, InputNumber, Modal, Table } from 'antd';
 import React, { useState } from 'react';
-import CartBookCard from '../components/cart_book_card';
 import OrderForm from '../components/order_form';
 import '../css/cart.css';
 import '../css/global.css';
+import BookCartCard from '../components/book_cart_card';
 
 
 const data = []
 for(var i = 1; i <= 10; i++){
     data.push({
         id : i,
-        title: `Title ${i}`,
-        description: `Description ${i}`,
-        cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-        price: i * 4.5,
+        book : {
+          id : i,
+          title: `Title ${i}`,
+          auther: `Auther ${i}`,
+          description: `Description ${i}`,
+          price: i * 4.5,
+          cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+          sales: i,
+        },
         number: i,
     })
 }
 
-  const books0 = [];
-  data.forEach((book) => {
-    books0.push({
-        book: book,
-        sum: book.price * book.number,
-      });
-  })
-
 function Cart (){
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [books, setBooks] = useState(books0);
+  const [books, setBooks] = useState(data);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -52,7 +49,7 @@ function Cart (){
     console.log('onNumberChange', id, newNumber);
     const newBooks = books.map(item => {
         if (item.book.id === id) {
-          return { ...item, book: { ...item.book, number: newNumber }, sum: item.book.price * newNumber };
+          return { ...item, number: newNumber};
         } else {
           return item;
         }
@@ -74,9 +71,9 @@ function Cart (){
   const getTotalPrice = (selectedRowKeys) => {
     let totalPrice = 0;
     selectedRowKeys.forEach((key) => {
-      const book = books.find(item => item.book.id === key);
-      if (book) {
-        totalPrice += book.sum;
+      const item = books.find(item => item.book.id === key);
+      if (item) {
+        totalPrice += item.book.price * item.number;
       }
     });
     return totalPrice;
@@ -88,7 +85,7 @@ function Cart (){
     {
       title: '信息',
       dataIndex: 'book',
-      render : book => <CartBookCard detail={book.description} title={book.title} cover={book.cover}/>
+      render : book => <BookCartCard book={book}/>
     },
     {
       title: '单价',
@@ -96,14 +93,15 @@ function Cart (){
     },
     {
       title: '数量',
-      dataIndex: 'book',
-      render: book => <InputNumber size="large" min={1} defaultValue={book.number} value={book.number} onChange={(newNumber) => {
-          onNumberChange(book.id, newNumber);
+      dataIndex: 'number',
+      render: (number,item) => <InputNumber size="large" min={1} defaultValue={number} value={number} onChange={(newNumber) => {
+          onNumberChange(item.book.id, newNumber);
       }} />
     },
     {
       title: '金额',
-      dataIndex: 'sum',
+      dataIndex: 'number',
+      render: (number,item) => <span>{item.book.price * number}</span>,
     },
     {
       title: '操作',

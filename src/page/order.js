@@ -1,6 +1,6 @@
 import { Input, Table } from 'antd';
 import React, { useState } from 'react';
-import CartBookCard from '../components/cart_book_card';
+import BookCartCard from '../components/book_cart_card';
 import '../css/global.css';
 import { getTimeStr } from '../util/time';
 
@@ -12,17 +12,20 @@ for(var i = 1; i <= 10; i++){
         "id": i,
         "receiver": `Sir ${i}`,
         "address": `Street ${i}`,
-        "phone": `${i}0000000000`,
-        "createTime": "2024-02-25T08:03:28.278Z",
-        "book": {
+        "tel": `${i}0000000000`,
+        "createAt": "2024-02-25T08:03:28.278Z",
+        "item": {
+          "id" : i,
+          "book": {
             "id": i,
             "title": `Title ${i}`,
             "description": `Description ${i}`,
             "price": i * 4.5,
             "cover": "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
-        },
-        "number" : i,
-        "sum" : i * 4.5 * i,
+            "sales": i,
+          },
+          "number" : i,
+        }
     })
 }
 
@@ -32,20 +35,21 @@ function Order (){
   const columns = [
     {
       title: '信息',
-      dataIndex: 'book',
-      render : book => <CartBookCard detail={book.description} title={book.title} cover={book.cover}/>
+      dataIndex: ['item','book'],
+      render : book => <BookCartCard book={book}/>
     },
     {
       title: '单价',
-      dataIndex: ['book','price'],
+      dataIndex: ['item','book','price'],
     },
     {
       title: '数量',
-      dataIndex: 'number',
+      dataIndex: ['item','number'],
     },
     {
         title: '总价',
-        dataIndex: 'sum',
+        dataIndex: '',
+        render: (text, record) => record.item.number * record.item.book.price,
     },
     {
         title: '收件人',
@@ -53,7 +57,7 @@ function Order (){
     },
       {
         title: '联系方式',
-        dataIndex: 'phone',
+        dataIndex: 'tel',
       },
       {
         title: '收货地址',
@@ -61,7 +65,7 @@ function Order (){
       },
       {
         title: '下单时间',
-        dataIndex: 'createTime',
+        dataIndex: 'createAt',
         render: time => getTimeStr(time),
       },
   ];

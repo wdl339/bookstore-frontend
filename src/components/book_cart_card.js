@@ -3,20 +3,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/cart.css';
 
-function CartBookCard ({detail,cover,title}) {
+function BookCartCard ({book}) {
     return(
         <div className='cart-book-detail'>
             <Image
-                    alt = {detail}
-                    src = {cover}
+                    alt = {book.title}
+                    src = {book.cover}
                 />
             <div>
-                <Link>{title}</Link>
+                <Link to={`/book/${book.id}`}>{book.title}</Link>
                 <br></br>
-                <p>{detail}</p>
+                <p>{book.description}</p>
             </div>
         </div>
     );
 };
 
-export default CartBookCard;
+export default BookCartCard;

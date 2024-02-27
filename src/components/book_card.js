@@ -1,4 +1,4 @@
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+import { MoneyCollectOutlined } from '@ant-design/icons';
 import { Card, Image } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -6,8 +6,9 @@ const { Meta } = Card;
 
 function BookCard ({book}) {
     return(
-        <Link>
+        
             <Card
+                className='book-card'
                 hoverable
                 cover={
                 <Image
@@ -15,18 +16,14 @@ function BookCard ({book}) {
                     src = {book.cover}
                 />
                 }
-                actions={[
-                    <SettingOutlined key="setting"/>,
-                    <EditOutlined key="edit" />,
-                    <EllipsisOutlined key="ellipsis" />,
-                ]}
             >
-                <Meta
-                title = {book.title}
-                description = {book.description}
-                />
+                <Link to={`/book/${book.id}`}>
+                    <Meta
+                    title = {book.title}
+                    description = {<><MoneyCollectOutlined /> <span>{book.price}元</span></>}
+                    />
+                </Link>
             </Card>
-        </Link> 
     );
 };
 
