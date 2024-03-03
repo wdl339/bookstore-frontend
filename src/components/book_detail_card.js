@@ -5,7 +5,7 @@ import '../css/book_detail.css';
 const { Title, Paragraph } = Typography;
 
 
-function BookDetailCard ({book}) {
+function BookDetailCard ({book,showModal}) {
     return(
         <Row>
             <Col span={8}>
@@ -17,7 +17,7 @@ function BookDetailCard ({book}) {
             <Col span={16}>
                 <Typography>
 
-                    <Title level={2} copyable>
+                    <Title level={2}>
                         {book.title}
                     </Title>
 
@@ -70,6 +70,7 @@ function BookDetailCard ({book}) {
                             icon={<MoneyCollectOutlined /> } 
                             shape="round"
                             size='large'
+                            onClick={showModal}
                         >
                             立即下单
                         </Button>

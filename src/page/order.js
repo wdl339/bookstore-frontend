@@ -98,7 +98,11 @@ function Order (){
               onChange={onChange}
               onOk={onOk}
             />
-            <Table columns={columns} dataSource={orders} pagination={{ pageSize: 5 }}/>
+            <Table 
+              columns={columns} 
+              dataSource={orders} 
+              pagination={{ pageSize: 5 }}
+            />
         </div>
     </div>
   );

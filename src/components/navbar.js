@@ -1,8 +1,9 @@
-import { BarChartOutlined, DollarOutlined, HomeOutlined, LoginOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { BarChartOutlined, HomeOutlined, LoginOutlined, PayCircleOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Col, Menu, Row } from 'antd';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../css/navbar.css';
+
 
 const Navbar = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ const Navbar = () => {
     {
       label: <Link to={"/order"} className='navbarLabel'>{"订单"}</Link>,
       key: 'order',
-      icon: <DollarOutlined />,
+      icon: <PayCircleOutlined />,
     },
     {
       label: <Link className='navbarLabel'>{"统计"}</Link>,
@@ -43,6 +44,11 @@ const Navbar = () => {
           key: 'myData',
         },
       ],
+    },
+    {
+      label: <Link to={"/manage"} className='navbarLabel'>{"管理"}</Link>,
+      key: 'manage',
+      icon: <UserOutlined />,
     },
   ];
 

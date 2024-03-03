@@ -94,9 +94,16 @@ function Cart (){
     {
       title: '数量',
       dataIndex: 'number',
-      render: (number,item) => <InputNumber size="large" min={1} defaultValue={number} value={number} onChange={(newNumber) => {
-          onNumberChange(item.book.id, newNumber);
-      }} />
+      render: (number,item) => 
+        <InputNumber 
+          size="large" 
+          min={1} 
+          defaultValue={number} 
+          value={number} 
+          onChange={(newNumber) => {
+              onNumberChange(item.book.id, newNumber);
+          }} 
+        />
     },
     {
       title: '金额',
@@ -106,10 +113,17 @@ function Cart (){
     {
       title: '操作',
       dataIndex: 'book',
-      render: book => <Button type="primary" onClick={() => {
-        onDelete(book.id);
-      }} danger>删除</Button>,
-
+      render: book => 
+        <Button 
+          type="primary" 
+          onClick={() => {
+            onDelete(book.id);
+          }} 
+          danger
+          shape="round" 
+        >
+          删除
+        </Button>,
     },
   ];
 
@@ -147,7 +161,11 @@ function Cart (){
                   元
                 </p> 
                 : <></>}
-                <Button type="primary" onClick={showModal} disabled={!hasSelected}>
+                <Button 
+                  type="primary" 
+                  onClick={showModal} 
+                  disabled={!hasSelected}
+                >
                     结算
                 </Button>
             </div>
