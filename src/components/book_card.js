@@ -6,9 +6,7 @@ const { Meta } = Card;
 
 function BookCard ({book}) {
     return(
-        
             <Card
-                className='book-card'
                 hoverable
                 cover={
                     <Image

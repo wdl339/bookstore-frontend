@@ -13,10 +13,10 @@ for(var i = 1; i <= 10; i++){
         book : {
           id : i,
           title: `Title ${i}`,
-          auther: `Auther ${i}`,
+          author: `author ${i}`,
           description: `Description ${i}`,
           price: i * 4.5,
-          cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+          cover: `books/book${i}.jpg`,
           sales: i,
         },
         number: i,

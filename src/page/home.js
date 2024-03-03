@@ -6,14 +6,14 @@ import "../css/global.css";
 function Home() {
 
   const data = []
-  for(var i = 1; i <= 10; i++){
+  for(var i = 1; i <= 12; i++){
       data.push({
           id : i,
           title: `Title ${i}`,
-          auther: `Auther ${i}`,
+          author: `author ${i}`,
           description: `Description ${i}`,
           price: i * 4.5,
-          cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+          cover: `books/book${i}.jpg` ,
           sales: i,
       })
   }
@@ -29,14 +29,14 @@ function Home() {
               />
               <List
                   grid={{
-                  gutter: 32,
-                  column: 5
+                    gutter: 32,
+                    column: 5
                   }}
                   dataSource={data}
                   renderItem={(item) => (
-                  <List.Item>
-                      <BookCard book={item}/>
-                  </List.Item>
+                    <List.Item>
+                        <BookCard book={item}/>
+                    </List.Item>
                   )}
                   pagination={{ 
                     pageSize: 10 , 

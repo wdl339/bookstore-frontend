@@ -9,13 +9,14 @@ function BookCartCard ({book}) {
             <Image
                 alt = {book.title}
                 src = {book.cover}
+                width = {100}
             />
             <div>
                 <Link to={`/book/${book.id}`}>
                     {book.title}
                 </Link>
                 <br></br>
-                <p>{book.description}</p>
+                <p>{book.author}</p>
             </div>
         </div>
     );

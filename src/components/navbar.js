@@ -22,7 +22,7 @@ const Navbar = () => {
     {
       label: <Link to={"/cart"} className='navbarLabel'>{"购物车"}</Link>,
       key: 'cart',
-      icon:<ShoppingCartOutlined />,
+      icon: <ShoppingCartOutlined />,
     },
     {
       label: <Link to={"/order"} className='navbarLabel'>{"订单"}</Link>,
@@ -36,11 +36,11 @@ const Navbar = () => {
       children: [
         {
           label: <Link to={"/webData"}>{'全站'}</Link>,
-          key: 'data:rank',
+          key: 'webData',
         },
         {
           label: <Link to={"/myData"}>{'用户'}</Link>,
-          key: 'data:user',
+          key: 'myData',
         },
       ],
     },
