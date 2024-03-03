@@ -6,3 +6,8 @@
 Menu{
     height:100%;
 }
+
+.navbarLabel{
+    color:black !important;
+    font-size: 15px;
+}

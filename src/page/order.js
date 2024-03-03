@@ -1,8 +1,9 @@
-import { Input, Table } from 'antd';
+import { DatePicker, Input, Table } from 'antd';
 import React, { useState } from 'react';
 import BookCartCard from '../components/book_cart_card';
 import '../css/global.css';
 import { getTimeStr } from '../util/time';
+const { RangePicker } = DatePicker;
 
 const { Search } = Input;
 
@@ -50,6 +51,7 @@ function Order (){
         title: '总价',
         dataIndex: '',
         render: (text, record) => record.item.number * record.item.book.price,
+        sorter: (a, b) => a.item.number * a.item.book.price - b.item.number * b.item.book.price,
     },
     {
         title: '收件人',
@@ -70,14 +72,30 @@ function Order (){
       },
   ];
 
+  const onChange = (value, dateString) => {
+    console.log('Selected Time: ', value);
+    console.log('Formatted Selected Time: ', dateString);
+  };
+  const onOk = (value) => {
+    console.log('onOk: ', value);
+  };
+
   return (
     <div className='content-background'>
         <div className='content-container'>
             <Search
-                placeholder="输入书名或时间查询"
+                placeholder="输入书名查询"
                 allowClear
                 enterButton="搜索"
                 size="large"
+            />
+            <RangePicker
+              showTime={{
+                format: 'HH:mm',
+              }}
+              format="YYYY-MM-DD HH:mm"
+              onChange={onChange}
+              onOk={onOk}
             />
             <Table columns={columns} dataSource={orders} pagination={{ pageSize: 5 }}/>
         </div>

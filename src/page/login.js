@@ -13,7 +13,11 @@ function Login() {
             <div className="login-background">
                 <div className="login-card">
                     <h1>电子书城</h1>  
-                    <Form name="normal_login" initialValues={{remember: true,}} onFinish={onFinish}>
+                    <Form 
+                        name="normal_login" 
+                        initialValues={{remember: true,}} 
+                        onFinish={onFinish}
+                    >
                         <Form.Item
                             name="username"
                             rules={[
@@ -23,7 +27,11 @@ function Login() {
                             },
                             ]}
                         >
-                            <Input prefix={<UserOutlined />} placeholder="用户名" className='input'/>
+                            <Input 
+                                prefix={<UserOutlined />} 
+                                placeholder="用户名" 
+                                className='input'
+                            />
                         </Form.Item>
 
                         <Form.Item
@@ -35,11 +43,20 @@ function Login() {
                             },
                             ]}
                         >
-                            <Input prefix={<LockOutlined />} type="password" placeholder="密码" className='input'/>
+                            <Input 
+                                prefix={<LockOutlined />} 
+                                type="password" 
+                                placeholder="密码" 
+                                className='input'
+                            />
                         </Form.Item>
 
                         <Form.Item>
-                            <Form.Item name="remember" valuePropName="checked" noStyle>
+                            <Form.Item 
+                                name="remember" 
+                                valuePropName="checked" 
+                                noStyle
+                            >
                                 <Checkbox className='remember-me'>记住我</Checkbox>
                             </Form.Item>
 

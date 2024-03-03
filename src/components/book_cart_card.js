@@ -7,11 +7,13 @@ function BookCartCard ({book}) {
     return(
         <div className='cart-book-detail'>
             <Image
-                    alt = {book.title}
-                    src = {book.cover}
-                />
+                alt = {book.title}
+                src = {book.cover}
+            />
             <div>
-                <Link to={`/book/${book.id}`}>{book.title}</Link>
+                <Link to={`/book/${book.id}`}>
+                    {book.title}
+                </Link>
                 <br></br>
                 <p>{book.description}</p>
             </div>

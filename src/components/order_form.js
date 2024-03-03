@@ -32,7 +32,13 @@ function OrderForm() {
     };
 
     return (
-    <Form form={form} name="validateOnly" layout="vertical" autoComplete="off" validateMessages={validateMessages}>
+    <Form 
+      form={form} 
+      name="validateOnly" 
+      layout="vertical" 
+      autoComplete="off" 
+      validateMessages={validateMessages}
+    >
       <Form.Item
         name="receiver"
         label="收货人"

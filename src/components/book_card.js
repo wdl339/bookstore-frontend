@@ -11,16 +11,21 @@ function BookCard ({book}) {
                 className='book-card'
                 hoverable
                 cover={
-                <Image
-                    alt = {book.title}
-                    src = {book.cover}
-                />
+                    <Image
+                        alt = {book.title}
+                        src = {book.cover}
+                    />
                 }
             >
                 <Link to={`/book/${book.id}`}>
                     <Meta
-                    title = {book.title}
-                    description = {<><MoneyCollectOutlined /> <span>{book.price}元</span></>}
+                    title={book.title}
+                    description={
+                        <>
+                            <MoneyCollectOutlined /> 
+                            <span>{book.price}元</span>
+                        </>
+                    }
                     />
                 </Link>
             </Card>

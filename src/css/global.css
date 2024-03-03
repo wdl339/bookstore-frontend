@@ -1,11 +1,15 @@
 .content-background {
-    background: linear-gradient(180deg,  #87CEEB,#0000FF);
+    /* background: linear-gradient(180deg,  #87CEEB,#0000FF); */
+    background-image: url('../../public/background.png');
+    background-size: cover;
+    background-position: center;
     text-align: center;
     justify-content: center;
     display: flex;
     align-items: center;
     flex-grow: 1;
     min-height: calc(100vh - 64.8px - 66.4px);
+    
 }
 
 .content-container{
@@ -18,4 +22,5 @@
     margin-top: 30px;
     margin-bottom: 30px;
     gap: 20px;
+
 }

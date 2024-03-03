@@ -38,7 +38,11 @@ function Home() {
                       <BookCard book={item}/>
                   </List.Item>
                   )}
-                  pagination={{ pageSize: 10 , position: 'bottom', align: 'center'}}
+                  pagination={{ 
+                    pageSize: 10 , 
+                    position: 'bottom', 
+                    align: 'center'
+                  }}
               />
             </div>
           </div>

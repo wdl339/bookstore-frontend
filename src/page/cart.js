@@ -1,9 +1,9 @@
 import { Button, InputNumber, Modal, Table } from 'antd';
 import React, { useState } from 'react';
+import BookCartCard from '../components/book_cart_card';
 import OrderForm from '../components/order_form';
 import '../css/cart.css';
 import '../css/global.css';
-import BookCartCard from '../components/book_cart_card';
 
 
 const data = []
@@ -116,15 +116,36 @@ function Cart (){
   return (
     <div className='content-background'>
         <div className='content-container'>
-            <Modal title="下单" open={isModalOpen} onCancel={onCancel}  onOk={onOk} footer={null}>
+            <Modal 
+              title="下单" 
+              open={isModalOpen} 
+              onCancel={onCancel}  
+              onOk={onOk} 
+              footer={null}
+            >
                 <OrderForm></OrderForm>
             </Modal>
 
-            <Table rowSelection={rowSelection} columns={columns} dataSource={books} pagination={{ pageSize: 5 }} rowKey={record => record.book.id}/>
+            <Table 
+              rowSelection={rowSelection} 
+              columns={columns} 
+              dataSource={books} 
+              pagination={{ pageSize: 5 }} 
+              rowKey={record => record.book.id}
+            />
             
             <div className='buy-container'>
                 {hasSelected?
-                <p>已选书本：<span className="red">{selectedRowKeys.length}</span>类 &nbsp;&nbsp;&nbsp; 合计：<span className="red">{getTotalPrice(selectedRowKeys)}</span>元</p> 
+                <p>已选书本：
+                  <span className="red">
+                    {selectedRowKeys.length}
+                  </span>
+                  类 &nbsp;&nbsp;&nbsp; 合计：
+                  <span className="red">
+                    {getTotalPrice(selectedRowKeys)}
+                  </span>
+                  元
+                </p> 
                 : <></>}
                 <Button type="primary" onClick={showModal} disabled={!hasSelected}>
                     结算
