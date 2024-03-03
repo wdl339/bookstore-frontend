@@ -144,7 +144,10 @@ function Cart (){
               rowSelection={rowSelection} 
               columns={columns} 
               dataSource={books} 
-              pagination={{ pageSize: 5 }} 
+              pagination={{ 
+                pageSize: 5, 
+                position: ['bottomCenter']
+              }} 
               rowKey={record => record.book.id}
             />
             

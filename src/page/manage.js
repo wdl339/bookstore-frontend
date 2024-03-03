@@ -68,7 +68,10 @@ function Manage (){
             <Table 
               columns={columns} 
               dataSource={users} 
-              pagination={{ pageSize: 10 }}
+              pagination={{ 
+                pageSize: 10, 
+                position: ['bottomCenter']
+              }} 
             />
         </div>
     </div>

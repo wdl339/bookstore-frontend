@@ -101,7 +101,10 @@ function Order (){
             <Table 
               columns={columns} 
               dataSource={orders} 
-              pagination={{ pageSize: 5 }}
+              pagination={{ 
+                pageSize: 5, 
+                position: ['bottomCenter']
+              }} 
             />
         </div>
     </div>

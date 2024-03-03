@@ -6,6 +6,7 @@ const { Meta } = Card;
 
 function BookCard ({book}) {
     return(
+        <Link to={`/book/${book.id}`}>
             <Card
                 hoverable
                 cover={
@@ -15,18 +16,17 @@ function BookCard ({book}) {
                     />
                 }
             >
-                <Link to={`/book/${book.id}`}>
-                    <Meta
+                <Meta
                     title={book.title}
                     description={
-                        <>
+                        <div>
                             <MoneyCollectOutlined /> 
                             <span>{book.price}元</span>
-                        </>
+                        </div>
                     }
-                    />
-                </Link>
+                />
             </Card>
+        </Link>
     );
 };
 
