@@ -4,7 +4,6 @@ import React from 'react';
 import '../css/book_detail.css';
 const { Title, Paragraph } = Typography;
 
-
 function BookDetailCard ({book,showModal}) {
     return(
         <Row>
@@ -15,47 +14,47 @@ function BookDetailCard ({book,showModal}) {
                 />
             </Col>
             <Col span={16}>
-                <Typography>
+                <Typography align="left">
 
                     <Title level={2}>
                         {book.title}
                     </Title>
 
-                    <Divider>作者</Divider>
+                    <Divider orientation="left" orientationMargin="0">作者</Divider>
                     <Paragraph>
                         {`${book.author} 著`}
                     </Paragraph>
 
-                    <Divider>内容简介</Divider>
+                    <Divider orientation="left" orientationMargin="0">内容简介</Divider>
                     <Paragraph>
                         <pre>{book.description}</pre>
                     </Paragraph>
 
                     <Row>
-                        <Col span={6} offset={1}> 
-                            <Divider>销量</Divider>
+                        <Col span={6}> 
+                            <Divider orientation="left" orientationMargin="0">销量</Divider>
                             <Paragraph>
-                                <span className="red"> {book.sales}</span> 本
+                                <span className="red-big-text"> {`${book.sales}本`}</span> 
                             </Paragraph>
                         </Col>
                         <Col span={6} offset={2}>
-                            <Divider>价格</Divider>
+                            <Divider orientation="left" orientationMargin="0">价格</Divider>
                             <Paragraph>
-                                <span className="red"> {book.price}</span> 元
+                                <span className="red-big-text"> {`${book.price}元`}</span> 
                             </Paragraph>
                         </Col>
                         <Col span={6} offset={2}>
-                            <Divider>您的购买数量</Divider>
+                            <Divider orientation="left" orientationMargin="0">您的购买数量</Divider>
                             <InputNumber 
                                 min={1} 
-                                max={10} 
                                 defaultValue={1} 
+                                size='large'
                                 onChange={value => console.log(value)}
                             />
                         </Col>
                     </Row>
 
-                    <Divider>购买</Divider>
+                    <Divider orientation="left" orientationMargin="0">购买</Divider>
                     <Space className='buy-button-group'>
                         <Button 
                             shape="round" 

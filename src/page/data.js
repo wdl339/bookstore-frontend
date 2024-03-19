@@ -6,7 +6,8 @@ import '../css/global.css';
 const { RangePicker } = DatePicker;
 
 const data0 = []
-for(var i = 1; i <= 10; i++){
+var i;
+for(i = 1; i <= 10; i++){
     data0.push({
           id : i,
           title: `Title ${i}`,
@@ -19,7 +20,7 @@ for(var i = 1; i <= 10; i++){
 }
 
 const data1 = []
-for(var i = 1; i <= 10; i++){
+for(i = 1; i <= 10; i++){
     data1.push({
           id : i,
           nickName: `Sir ${i}`,
@@ -29,7 +30,7 @@ for(var i = 1; i <= 10; i++){
 }
 
 const data2 = []
-for(var i = 1; i <= 10; i++){
+for(i = 1; i <= 10; i++){
     data2.push({
         id : i,
         book : {
@@ -117,10 +118,9 @@ function MyData(){
                     />
                 <RankChart data={dataOrder} yTitle={'购买量'} title={"个人购买数据统计"}/>
                 <h3>购书总本数：
-                    <span className="red">{totalBooks}</span>
-                    本 &nbsp;&nbsp;&nbsp; 总金额：
-                    <span className="red">{totalPrice}</span>
-                    元
+                    <span className="red-big-text">{`${totalBooks}本`}</span>
+                     &nbsp;&nbsp;&nbsp; 总金额：
+                    <span className="red-big-text">{`${totalPrice}元`}</span>
                 </h3> 
             </div>
         </div>

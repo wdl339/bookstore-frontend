@@ -154,14 +154,13 @@ function Cart (){
             <div className='buy-container'>
                 {hasSelected?
                 <p>已选书本：
-                  <span className="red">
-                    {selectedRowKeys.length}
+                  <span className="red-big-text">
+                    {`${selectedRowKeys.length}类`}
                   </span>
-                  类 &nbsp;&nbsp;&nbsp; 合计：
-                  <span className="red">
-                    {getTotalPrice(selectedRowKeys)}
+                  &nbsp;&nbsp;&nbsp; 合计：
+                  <span className="red-big-text">
+                    {`${getTotalPrice(selectedRowKeys)}元`}
                   </span>
-                  元
                 </p> 
                 : <></>}
                 <Button 

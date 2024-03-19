@@ -28,7 +28,7 @@ function BookDetail() {
             id : id,
             title: `Title ${id}`,
             author: `author ${id}`,
-            description: `Description ${id}`,
+            description: `Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description ${id}`,
             price: id * 4.5,
             cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
             sales: id,
