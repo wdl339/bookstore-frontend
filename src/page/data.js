@@ -1,6 +1,5 @@
-
 import { DatePicker } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RankChart from '../components/rank_chart';
 import '../css/global.css';
 const { RangePicker } = DatePicker;
@@ -47,8 +46,13 @@ for(i = 1; i <= 10; i++){
 }
 
 function WebData(){
-    const [books, setBooks] = useState(data0);
-    const [users, setUsers] = useState(data1);
+    const [books, setBooks] = useState([]);
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        setBooks(data0);
+        setUsers(data1);
+    }, []);
 
     const dataBook = books.map(book => ({
         y: book.sales,
@@ -78,16 +82,20 @@ function WebData(){
                     format="YYYY-MM-DD HH:mm"
                     onChange={onChange}
                     onOk={onOk}
-                    />
-                <RankChart data={dataBook} yTitle={'销售量'} title={"热销榜"}/>
-                <RankChart data={dataUser} yTitle={'购书量'} title={"消费榜"}/>
+                />
+                {books.length !== 0 && <RankChart data={dataBook} yTitle={'销售量'} title={"热销榜"}/>}
+                {users.length !== 0 && <RankChart data={dataUser} yTitle={'购书量'} title={"消费榜"}/>}
             </div>
         </div>
     );
 }
 
 function MyData(){
-    const [orders,setOrders] = useState(data2);
+    const [orders,setOrders] = useState([]);
+
+    useEffect(() => {
+        setOrders(data2);
+    }, []);
 
     const dataOrder = orders.map(order => ({
         y: order.number,
@@ -116,7 +124,7 @@ function MyData(){
                     onChange={onChange}
                     onOk={onOk}
                     />
-                <RankChart data={dataOrder} yTitle={'购买量'} title={"个人购买数据统计"}/>
+                {orders.length !== 0 && <RankChart data={dataOrder} yTitle={'购买量'} title={"个人购买数据统计"}/>}
                 <h3>购书总本数：
                     <span className="red-big-text">{`${totalBooks}本`}</span>
                      &nbsp;&nbsp;&nbsp; 总金额：

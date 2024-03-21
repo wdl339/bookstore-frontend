@@ -1,5 +1,6 @@
-import { Button, Input, Table } from 'antd';
-import React, { useState } from 'react';
+import { Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import ManageTable from '../components/manage_table';
 import '../css/global.css';
 
 const { Search } = Input;
@@ -15,46 +16,17 @@ for(var i = 1; i <= 10; i++){
 }
 
 function Manage (){
-  const [users,setUsers] = useState(data);
+  const [users,setUsers] = useState([]);
+
+  useEffect(() => {
+    setUsers(data);
+  }, []);
 
   const onBan = (id) => {
     setUsers(users.map(user => 
       (user.id === id) ? { ...user, isBanned: !user.isBanned } : user
     ));
   };
-
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: '昵称',
-      dataIndex: 'nickname',
-      key: 'nickname',
-    },
-    {
-      title: '余额',
-      dataIndex: 'balance',
-      key: 'balance',
-    },
-    {
-        title: '操作',
-        dataIndex: 'isBanned',
-        key: 'isBanned',
-        render: (isBanned, record) => (
-            <Button 
-                type="primary"
-                danger={!isBanned}
-                onClick={() => onBan(record.id)}
-                shape="round"
-            >
-                {isBanned ? '解禁' : '禁用'}
-            </Button>
-        ),
-      },
-  ];
 
   return (
     <div className='content-background'>
@@ -65,14 +37,10 @@ function Manage (){
                 enterButton="搜索"
                 size="large"
             />
-            <Table 
-              columns={columns} 
-              dataSource={users} 
-              pagination={{ 
-                pageSize: 10, 
-                position: ['bottomCenter']
-              }} 
-            />
+            {users.length === 0 ? 
+              <p>没有用户可管理（悲）</p> : 
+              <ManageTable users={users} onBan={onBan}/>
+            }
         </div>
     </div>
   );

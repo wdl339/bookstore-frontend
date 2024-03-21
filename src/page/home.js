@@ -1,6 +1,6 @@
-import { List } from 'antd';
 import Search from 'antd/es/input/Search';
-import BookCard from '../components/book_card';
+import React from 'react';
+import BookList from '../components/book_list';
 import "../css/global.css";
 
 function Home() {
@@ -27,23 +27,7 @@ function Home() {
                   enterButton="搜索"
                   size="large"
               />
-              <List
-                  grid={{
-                    gutter: 32,
-                    column: 5
-                  }}
-                  dataSource={data}
-                  renderItem={(item) => (
-                    <List.Item>
-                        <BookCard book={item}/>
-                    </List.Item>
-                  )}
-                  pagination={{ 
-                    pageSize: 10 , 
-                    position: 'bottom', 
-                    align: 'center'
-                  }}
-              />
+              <BookList data={data}/>
             </div>
           </div>
     );

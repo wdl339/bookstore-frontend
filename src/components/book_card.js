@@ -25,7 +25,7 @@ function BookCard ({book}) {
                 description={
                     <div>
                         <MoneyCollectOutlined /> 
-                        <span>{book.price}元</span>
+                        <span>{` ${book.price}元`}</span>
                     </div>
                 }
             />

@@ -1,8 +1,7 @@
-import { DatePicker, Input, Table } from 'antd';
-import React, { useState } from 'react';
-import BookCartCard from '../components/book_cart_card';
+import { DatePicker, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import OrderTable from '../components/order_table';
 import '../css/global.css';
-import { getTimeStr } from '../util/time';
 const { RangePicker } = DatePicker;
 
 const { Search } = Input;
@@ -32,51 +31,17 @@ for(var i = 1; i <= 10; i++){
 }
 
 function Order (){
-  const [orders, serOrders] = useState(data);
+  const [orders, serOrders] = useState([]);
 
-  const columns = [
-    {
-      title: '信息',
-      dataIndex: ['item','book'],
-      render : book => <BookCartCard book={book}/>
-    },
-    {
-      title: '单价',
-      dataIndex: ['item','book','price'],
-    },
-    {
-      title: '数量',
-      dataIndex: ['item','number'],
-    },
-    {
-        title: '总价',
-        dataIndex: '',
-        render: (text, record) => record.item.number * record.item.book.price,
-        sorter: (a, b) => a.item.number * a.item.book.price - b.item.number * b.item.book.price,
-    },
-    {
-        title: '收件人',
-        dataIndex: 'receiver',
-    },
-      {
-        title: '联系方式',
-        dataIndex: 'tel',
-      },
-      {
-        title: '收货地址',
-        dataIndex: 'address',
-      },
-      {
-        title: '下单时间',
-        dataIndex: 'createAt',
-        render: time => getTimeStr(time),
-      },
-  ];
+  useEffect(() => {
+    serOrders(data);
+  }, []);
 
   const onChange = (value, dateString) => {
     console.log('Selected Time: ', value);
     console.log('Formatted Selected Time: ', dateString);
   };
+  
   const onOk = (value) => {
     console.log('onOk: ', value);
   };
@@ -90,6 +55,7 @@ function Order (){
                 enterButton="搜索"
                 size="large"
             />
+
             <RangePicker
               showTime={{
                 format: 'HH:mm',
@@ -98,14 +64,12 @@ function Order (){
               onChange={onChange}
               onOk={onOk}
             />
-            <Table 
-              columns={columns} 
-              dataSource={orders} 
-              pagination={{ 
-                pageSize: 5, 
-                position: ['bottomCenter']
-              }} 
-            />
+
+            {orders.length === 0 ? 
+              <p>暂无订单</p>
+              :
+              <OrderTable orders={orders}/>
+            }
         </div>
     </div>
   );
