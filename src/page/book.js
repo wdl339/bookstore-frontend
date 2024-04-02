@@ -30,8 +30,9 @@ function BookDetail() {
             author: `author ${id}`,
             description: `Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description ${id}`,
             price: id * 4.5,
-            cover: "https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png",
+            cover: `http://localhost:3000/books/book${id}.jpg`,
             sales: id,
+            stock: id * 10,
         }
 
         setBook(book0);

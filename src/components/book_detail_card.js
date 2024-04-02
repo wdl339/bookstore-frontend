@@ -5,6 +5,12 @@ import '../css/book_detail.css';
 const { Title, Paragraph } = Typography;
 
 function BookDetailCard ({book,showModal}) {
+
+    const addToCart = () => {
+        console.log('add to cart');
+        window.location.href = '/cart';
+    }
+
     return(
         <Row>
             <Col span={8}>
@@ -20,10 +26,20 @@ function BookDetailCard ({book,showModal}) {
                         {book.title}
                     </Title>
 
-                    <Divider orientation="left" orientationMargin="0">作者</Divider>
-                    <Paragraph>
-                        {`${book.author} 著`}
-                    </Paragraph>
+                    <Row>
+                        <Col span={6}> 
+                            <Divider orientation="left" orientationMargin="0">作者</Divider>
+                            <Paragraph>
+                                {`${book.author} 著`}
+                            </Paragraph>
+                        </Col>
+                        <Col span={6} offset={2}>
+                            <Divider orientation="left" orientationMargin="0">ISBN编号</Divider>
+                            <Paragraph>
+                                {book.id}
+                            </Paragraph>
+                        </Col>
+                    </Row>
 
                     <Divider orientation="left" orientationMargin="0">内容简介</Divider>
                     <Paragraph>
@@ -38,6 +54,14 @@ function BookDetailCard ({book,showModal}) {
                             </Paragraph>
                         </Col>
                         <Col span={6} offset={2}>
+                            <Divider orientation="left" orientationMargin="0">库存</Divider>
+                            <Paragraph>
+                                <span className="red-big-text"> {`${book.stock}本`}</span> 
+                            </Paragraph>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={6}>
                             <Divider orientation="left" orientationMargin="0">价格</Divider>
                             <Paragraph>
                                 <span className="red-big-text"> {`${book.price}元`}</span> 
@@ -57,9 +81,11 @@ function BookDetailCard ({book,showModal}) {
                     <Divider orientation="left" orientationMargin="0">购买</Divider>
                     <Space className='buy-button-group'>
                         <Button 
+                            type="primary" 
                             shape="round" 
                             icon={<ShoppingCartOutlined />}
                             size='large'
+                            onClick={addToCart}
                         >
                             加入购物车
                         </Button>

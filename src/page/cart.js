@@ -1,9 +1,11 @@
-import { Button, Modal } from 'antd';
+import { Button, Input, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import CartTable from '../components/cart_table';
 import OrderForm from '../components/order_form';
 import '../css/cart.css';
 import '../css/global.css';
+
+const { Search } = Input;
 
 function Cart (){
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -99,6 +101,13 @@ function Cart (){
             >
                 <OrderForm></OrderForm>
             </Modal>
+
+            <Search
+                placeholder="输入书名查询"
+                allowClear
+                enterButton="搜索"
+                size="large"
+            />
 
             {books.length === 0? 
               <p>购物车为空</p>

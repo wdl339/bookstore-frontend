@@ -41,7 +41,7 @@ function Router() {
             <Route path="/*" element={<Home />} />
         </Routes> :
         <Routes>
-            <Route path="/*" element={<Login />} />
+            <Route path="/*" element={<Login login={true}/>} />
         </Routes>
     );
 }
