@@ -2,7 +2,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import React from 'react';
 import '../css/login.css';
-import { login, logout } from '../service/login';
+import { login } from '../service/login';
 
 function LoginForm() {
     const onFinish = (values) => {
@@ -10,16 +10,6 @@ function LoginForm() {
         login(username, password).then(result => {
             if (result.ok) {
                 window.location.href = '/';
-            } else {
-                alert(result.message);
-            }
-        });
-    }
-
-    const logoutUser = async () => {
-        logout().then(result => {
-            if (result) {
-                window.location.href = '/login';
             } else {
                 alert(result.message);
             }
@@ -84,16 +74,6 @@ function LoginForm() {
                     className='login-button'
                 >
                 登录
-                </Button>
-            </Form.Item>
-
-            <Form.Item>
-                <Button 
-                    type="primary" 
-                    onClick={() => logoutUser()}
-                    className='login-button'
-                >
-                登出
                 </Button>
             </Form.Item>
 

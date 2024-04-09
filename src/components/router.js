@@ -7,6 +7,7 @@ import Home from "../page/home";
 import Login from "../page/login";
 import Manage from '../page/manage';
 import Order from "../page/order";
+import Profile from '../page/profile';
 import { getUser } from '../service/user';
 
 function Router() {
@@ -36,6 +37,7 @@ function Router() {
             <Route path="/cart" element={<Cart/>} />
             <Route path="/order" element={<Order/>} />
             <Route path="/manage" element={<Manage/>} />
+            <Route path="/profile" element={<Profile/>} />
             <Route path="/myData" element={<MyData/>} />
             <Route path="/webData" element={<WebData/>} />
             <Route path="/*" element={<Home />} />

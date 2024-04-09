@@ -1,4 +1,4 @@
-import { BarChartOutlined, HomeOutlined, LoginOutlined, PayCircleOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
+import { BarChartOutlined, HomeOutlined, PayCircleOutlined, ShoppingCartOutlined, UserOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { Avatar, Col, Menu, Row } from 'antd';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -8,13 +8,14 @@ import '../css/navbar.css';
 const Navbar = () => {
   const location = useLocation();
   const current = location.pathname.split('/');
+  const avatarUrl = 'http://localhost:3000/avatar.jpg';
 
   const items = [
-    {
-      label: <Link to={"/login"} className='navbarLabel'>{"登录"}</Link>,
-      key: 'login',
-      icon: <LoginOutlined />,
-    },
+    // {
+    //   label: <Link to={"/login"} className='navbarLabel'>{"登录"}</Link>,
+    //   key: 'login',
+    //   icon: <LoginOutlined />,
+    // },
     {
       label: <Link to={"/"} className='navbarLabel'>{"首页"}</Link>,
       key: '',
@@ -48,8 +49,13 @@ const Navbar = () => {
     {
       label: <Link to={"/manage"} className='navbarLabel'>{"管理"}</Link>,
       key: 'manage',
-      icon: <UserOutlined />,
+      icon: <UsergroupAddOutlined />,
     },
+    {
+      label: <Link to={"/profile"} className='navbarLabel'>{"个人"}</Link>,
+      key: 'profile',
+      icon: <UserOutlined />,
+    }
   ];
 
 
@@ -72,7 +78,11 @@ const Navbar = () => {
           } />
         </Col>
         <Col>
-          <Avatar size="large" icon={<UserOutlined />}/>
+          <Avatar 
+            src={avatarUrl} 
+            alt='avatar' 
+            onClick={() => window.location.href = '/profile'}
+          />
         </Col>
     </Row>
   );

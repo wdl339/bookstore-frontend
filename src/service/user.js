@@ -13,3 +13,21 @@ export async function getUser() {
     return result;
 }
 
+export async function checkPassword(password) {
+    // const url = `${PREFIX}/user/password`;
+    let result;
+
+    // try {
+    //     const response = await post(url, { password });
+    //     result = response.valid;
+    // } catch (e) {
+    //     console.log(e);
+    // }
+
+    if (password === '12345678')
+        result = true;
+    else
+        result = false;
+
+    return result;
+}

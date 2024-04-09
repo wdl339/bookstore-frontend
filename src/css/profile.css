@@ -1,7 +1,7 @@
-.buy-button-group{
+.profile-button-group{
     display: flex;
     gap: 20px;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     margin-top: 20px;
 }
