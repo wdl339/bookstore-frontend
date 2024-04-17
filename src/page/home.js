@@ -19,7 +19,7 @@ function Home() {
     }
 
     return (
-          <div className="content-background">    
+        <div className="content-background">    
             <div className='content-container'>
               <Search 
                   placeholder="输入书名查询"
@@ -29,7 +29,7 @@ function Home() {
               />
               <BookList data={data}/>
             </div>
-          </div>
+        </div>
     );
 }
 

@@ -14,10 +14,8 @@ function BookDetail() {
     const showModal = () => {
         setIsModalOpen(true);
     };
+    
     const onOk = () => {
-        setIsModalOpen(false);
-    };
-    const onCancel = () => {
         setIsModalOpen(false);
     };
 
@@ -45,7 +43,7 @@ function BookDetail() {
                     <Modal 
                         title="下单" 
                         open={isModalOpen} 
-                        onCancel={onCancel}  
+                        onCancel={onOk}  
                         onOk={onOk} 
                         footer={null}
                     >

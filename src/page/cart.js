@@ -2,6 +2,7 @@ import { Button, Input, Modal } from 'antd';
 import React, { useEffect, useState } from 'react';
 import CartTable from '../components/cart_table';
 import OrderForm from '../components/order_form';
+import { CartStatistics } from '../components/statistics';
 import '../css/cart.css';
 import '../css/global.css';
 import { getCartItems } from '../service/cart';
@@ -28,23 +29,16 @@ function Cart (){
     setIsModalOpen(true);
   };
 
-  const onOk = () => {
-    setIsModalOpen(false);
-    setSelectedRowKeys([]);
-  };
-
   const onCancel = () => {
     setIsModalOpen(false);
     setSelectedRowKeys([]);
   };
 
   const onSelectChange = (newSelectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
   const onNumberChange = (id, newNumber) => {
-    console.log('onNumberChange', id, newNumber);
     const newBooks = books.map(item => {
         if (item.book.id === id) {
           return { ...item, number: newNumber};
@@ -56,28 +50,11 @@ function Cart (){
   }
 
   const onDelete = (id) => {
-        console.log('onDelete', id);
         const newBooks = books.filter(item => item.book.id !== id);
         setBooks(newBooks);
         const newSelectedRowKeys = selectedRowKeys.filter(key => key !== id);
         setSelectedRowKeys(newSelectedRowKeys);
   }
-
-  const getTotalPrice = (selectedRowKeys) => {
-    let totalPrice = 0;
-    selectedRowKeys.forEach((key) => {
-      const item = books.find(item => item.book.id === key);
-      if (item) {
-        totalPrice += item.book.price * item.number;
-      }
-    });
-    return totalPrice;
-  }
-
-  let rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
 
   const hasSelected = selectedRowKeys.length > 0;
 
@@ -88,7 +65,7 @@ function Cart (){
               title="下单" 
               open={isModalOpen} 
               onCancel={onCancel}  
-              onOk={onOk} 
+              onOk={onCancel} 
               footer={null}
             >
                 <OrderForm></OrderForm>
@@ -102,10 +79,12 @@ function Cart (){
             />
 
             {books.length === 0? 
-              <p>购物车为空</p>
-              :
+              <p>购物车为空</p> :
               <CartTable 
-                rowSelection={rowSelection} 
+                rowSelection={{
+                  selectedRowKeys,
+                  onChange: onSelectChange,
+                }}
                 books={books} 
                 onNumberChange={onNumberChange} 
                 onDelete={onDelete}
@@ -113,17 +92,11 @@ function Cart (){
             }
             
             <div className='buy-container'>
-                {hasSelected?
-                <p>已选书本：
-                  <span className="red-big-text">
-                    {`${selectedRowKeys.length}类`}
-                  </span>
-                  &nbsp;&nbsp;&nbsp; 合计：
-                  <span className="red-big-text">
-                    {`${getTotalPrice(selectedRowKeys)}元`}
-                  </span>
-                </p> 
-                : <></>}
+                {hasSelected? <CartStatistics 
+                                selectedRowKeys={selectedRowKeys}
+                                books={books}
+                              /> 
+                  : <></>}
                 <Button 
                   type="primary" 
                   onClick={showModal} 

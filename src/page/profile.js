@@ -7,14 +7,10 @@ import { getProfile } from '../service/user';
 
 function Profile() {
     const [info, setInfo] = useState();
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
-    };
-    const onOk = () => {
-        setIsModalOpen(false);
     };
     const onCancel = () => {
         setIsModalOpen(false);
@@ -42,7 +38,7 @@ function Profile() {
                     title="修改密码" 
                     open={isModalOpen} 
                     onCancel={onCancel}  
-                    onOk={onOk} 
+                    onOk={onCancel}
                     footer={null}
                 >
                     <PasswordForm></PasswordForm>

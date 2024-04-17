@@ -1,6 +1,7 @@
 import { DatePicker } from 'antd';
 import React, { useEffect, useState } from 'react';
 import RankChart from '../components/rank_chart';
+import { RankStatistics } from '../components/statistics';
 import '../css/global.css';
 import { getTopBooks, getTopUsers } from '../service/rank';
 import { getUserRankData } from '../service/user';
@@ -42,10 +43,10 @@ function WebData(){
     const onChange = (value, dateString) => {
         console.log('Selected Time: ', value);
         console.log('Formatted Selected Time: ', dateString);
-      };
-      const onOk = (value) => {
+    };
+    const onOk = (value) => {
         console.log('onOk: ', value);
-      };
+    };
 
     return (
         <div className='content-background'>
@@ -84,9 +85,6 @@ function MyData(){
         x: order.book.title,
     }));
 
-    const totalBooks = orders.reduce((total, order) => total + order.number, 0);
-    const totalPrice = orders.reduce((total, order) => total + order.book.price * order.number, 0);
-
     const onChange = (value, dateString) => {
         console.log('Selected Time: ', value);
         console.log('Formatted Selected Time: ', dateString);
@@ -107,11 +105,7 @@ function MyData(){
                     onOk={onOk}
                     />
                 {orders.length !== 0 && <RankChart data={dataOrder} yTitle={'购买量'} title={"个人购买数据统计"}/>}
-                <h3>购书总本数：
-                    <span className="red-big-text">{`${totalBooks}本`}</span>
-                     &nbsp;&nbsp;&nbsp; 总金额：
-                    <span className="red-big-text">{`${totalPrice}元`}</span>
-                </h3> 
+                <RankStatistics orders={orders}/>
             </div>
         </div>
     );
