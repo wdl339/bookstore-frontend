@@ -4,6 +4,7 @@ import CartTable from '../components/cart_table';
 import OrderForm from '../components/order_form';
 import '../css/cart.css';
 import '../css/global.css';
+import { getCartItems } from '../service/cart';
 
 const { Search } = Input;
 
@@ -12,24 +13,15 @@ function Cart (){
   const [books, setBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const data = []
-    for(var i = 1; i <= 10; i++){
-        data.push({
-            id : i,
-            book : {
-              id : i,
-              title: `Title ${i}`,
-              author: `author ${i}`,
-              description: `Description ${i}`,
-              price: i * 4.5,
-              cover: `books/book${i}.jpg`,
-              sales: i,
-            },
-            number: i,
-        })
+  const setCartItems = async () => {
+    let cartItems = await getCartItems();
+    if (cartItems) {
+      setBooks(cartItems);
     }
-    setBooks(data);
+  }
+
+  useEffect(() => {
+    setCartItems();
   }, []);
 
   const showModal = () => {

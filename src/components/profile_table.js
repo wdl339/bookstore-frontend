@@ -17,6 +17,8 @@ function ProfileTable({info,showModal}) {
             phone: info?.phone,
             address: info?.address,
             balance: info?.balance,
+            level: info?.level,
+            description: info?.description
         });
 
         setAvatarUrl(info?.avatar);
@@ -138,25 +140,27 @@ function ProfileTable({info,showModal}) {
                     <Form.Item
                         name="address"
                         label="默认收货地址"
-                        rules={[
-                            {
-                                required: true,
-                                message: '请输入默认收货地址',
-                            },
-                        ]}
                     >
                         <Input />
                     </Form.Item>
 
                     <Form.Item
+                        name="description"
+                        label="个性自述"
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="level"
+                        label="用户等级"
+                    >
+                        <Input disabled/>
+                    </Form.Item>
+
+                    <Form.Item
                         name="balance"
                         label="余额（元）"
-                        rules={[
-                            {
-                                required: true,
-                                message: '???',
-                            },
-                        ]}
                     >
                         <Input disabled/>
                     </Form.Item>

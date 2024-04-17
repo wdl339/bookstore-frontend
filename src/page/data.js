@@ -2,57 +2,32 @@ import { DatePicker } from 'antd';
 import React, { useEffect, useState } from 'react';
 import RankChart from '../components/rank_chart';
 import '../css/global.css';
+import { getTopBooks, getTopUsers } from '../service/rank';
+import { getUserRankData } from '../service/user';
 const { RangePicker } = DatePicker;
-
-const data0 = []
-var i;
-for(i = 1; i <= 10; i++){
-    data0.push({
-          id : i,
-          title: `Title ${i}`,
-          author: `author ${i}`,
-          description: `Description ${i}`,
-          price: i * 4.5,
-          cover: `books/book${i}.jpg`,
-          sales: i,
-    })
-}
-
-const data1 = []
-for(i = 1; i <= 10; i++){
-    data1.push({
-          id : i,
-          nickName: `Sir ${i}`,
-          balance: i * 100,
-          number: i * 5,
-    })
-}
-
-const data2 = []
-for(i = 1; i <= 10; i++){
-    data2.push({
-        id : i,
-        book : {
-          id : i,
-          title: `Title ${i}`,
-          author: `author ${i}`,
-          description: `Description ${i}`,
-          price: i * 4.5,
-          cover: `books/book${i}.jpg`,
-          sales: i,
-        },
-        number: i,
-    })
-}
 
 function WebData(){
     const [books, setBooks] = useState([]);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        setBooks(data0);
-        setUsers(data1);
+        setTopBooks();
+        setTopUsers();
     }, []);
+
+    const setTopBooks = async () => {
+        let allBooks = await getTopBooks();
+        if (allBooks) {
+            setBooks(allBooks);
+        }
+    }
+
+    const setTopUsers = async () => {
+        let allUsers = await getTopUsers();
+        if (allUsers) {
+            setUsers(allUsers);
+        }
+    }
 
     const dataBook = books.map(book => ({
         y: book.sales,
@@ -94,8 +69,15 @@ function MyData(){
     const [orders,setOrders] = useState([]);
 
     useEffect(() => {
-        setOrders(data2);
+        setUserRankData();
     }, []);
+
+    const setUserRankData = async () => {
+        let allOrders = await getUserRankData();
+        if (allOrders) {
+            setOrders(allOrders);
+        }
+    }
 
     const dataOrder = orders.map(order => ({
         y: order.number,

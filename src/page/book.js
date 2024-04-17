@@ -5,6 +5,7 @@ import BookDetailCard from "../components/book_detail_card";
 import OrderForm from "../components/order_form";
 import '../css/book_detail.css';
 import '../css/global.css';
+import { getBookById } from '../service/book';
 
 function BookDetail() {
     const [book, setBook] = useState();
@@ -20,25 +21,18 @@ function BookDetail() {
         setIsModalOpen(false);
     };
 
-
     let { id } = useParams();
 
-    useEffect(() => {
-        const book0 = {
-            id : id,
-            title: `Title ${id}`,
-            author: `author ${id}`,
-            description: `Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description ${id}`,
-            price: id * 4.5,
-            cover: `http://localhost:3000/books/book${id}.jpg`,
-            sales: id,
-            stock: id * 10,
+    const getBook = async () => {
+        let book = await getBookById(id);
+        if (book) {
+            setBook(book);
         }
+    }
 
-        setBook(book0);
+    useEffect(() => {
+        getBook();
     }, [id]);
-
-    
 
     return ( 
         <div className="content-background"> 

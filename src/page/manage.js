@@ -2,25 +2,23 @@ import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import ManageTable from '../components/manage_table';
 import '../css/global.css';
+import { getAllUsers } from '../service/user';
 
 const { Search } = Input;
-
-const data = []
-for(var i = 1; i <= 10; i++){
-    data.push({
-        "id": i,
-        "nickname": `sir ${i}`,
-        "balance": i * 100,
-        "isBanned": false,
-    })
-}
 
 function Manage (){
   const [users,setUsers] = useState([]);
 
   useEffect(() => {
-    setUsers(data);
+    setAllUsers();
   }, []);
+
+  const setAllUsers = async () => {
+    let allUsers = await getAllUsers();
+    if (allUsers) {
+      setUsers(allUsers);
+    }
+  }
 
   const onBan = (id) => {
     setUsers(users.map(user => 

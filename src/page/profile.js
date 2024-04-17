@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PasswordForm from '../components/password_form';
 import ProfileTable from '../components/profile_table';
 import '../css/global.css';
-
+import { getProfile } from '../service/user';
 
 function Profile() {
     const [info, setInfo] = useState();
@@ -20,18 +20,15 @@ function Profile() {
         setIsModalOpen(false);
     };
 
+    const setProfile = async () => {
+        let profile = await getProfile();
+        if (profile) {
+            setInfo(profile);
+        }
+    }
 
     useEffect(() => {
-        const data = {
-            name: "张三",
-            email: "123@qq.com",
-            avatar: "http://localhost:3000/avatar.jpg",
-            phone: "12345678901",
-            address: "江川路800号上海交通大学",
-            balance: 100,
-        }
-
-        setInfo(data);
+        setProfile();
       }, []);
 
     return (

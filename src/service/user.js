@@ -13,6 +13,23 @@ export async function getUser() {
     return result;
 }
 
+export async function getProfile() {
+    let result;
+
+    result = {
+        name: "张三",
+        email: "123@qq.com",
+        avatar: "http://localhost:3000/avatar.jpg",
+        phone: "12345678901",
+        address: "江川路800号上海交通大学",
+        balance: 100,
+        level: 1,
+        description: "这是一个有趣的人"
+    }
+
+    return result;
+}
+
 export async function checkPassword(password) {
     // const url = `${PREFIX}/user/password`;
     let result;
@@ -28,6 +45,47 @@ export async function checkPassword(password) {
         result = true;
     else
         result = false;
+
+    return result;
+}
+
+export async function getAllUsers(){
+    let result;
+
+    result = [];
+
+    for(var i = 1; i <= 10; i++){
+        result.push({
+            id : i,
+            nickname: `Sir ${i}`,
+            balance: i * 100,
+            isBanned: false,
+        })
+    }
+
+    return result;
+}
+
+export async function getUserRankData(){
+    let result;
+
+    result = [];
+
+    for(var i = 1; i <= 10; i++){
+        result.push({
+            id : i,
+            book : {
+              id : i,
+              title: `Title ${i}`,
+              author: `author ${i}`,
+              description: `Description ${i}`,
+              price: i * 4.5,
+              cover: `books/book${i}.jpg`,
+              sales: i,
+            },
+            number: i,
+        })
+    }
 
     return result;
 }
