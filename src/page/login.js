@@ -1,6 +1,6 @@
 import React from 'react';
 import LoginForm from '../components/login_form';
-import RegisterForm from '../components/register_table';
+import RegisterForm from '../components/register_form';
 import '../css/login.css';
 
 function Login({login}) {

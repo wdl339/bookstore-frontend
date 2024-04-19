@@ -85,7 +85,7 @@ function ProfileTable({info,showModal}) {
                             <Button 
                                 type='primary'
                                 icon={<UploadOutlined />}
-                                style={{marginTop: '20px', maxWidth: '100%'}}
+                                className='upload-button'
                             >
                                 更新头像图片
                             </Button>
