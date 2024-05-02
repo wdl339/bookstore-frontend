@@ -2,11 +2,12 @@ import { Button, Modal } from 'antd';
 import React, { useState } from 'react';
 import '../css/cart.css';
 import '../css/global.css';
+import { changeItemNumber } from '../service/cart';
 import CartTable from './cart_table';
 import OrderForm from './order_form';
 import { CartStatistics } from './statistics';
 
-function CartBody({books, setBooks}) {
+function CartBody({books, setBooks, setCartItems}) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -18,20 +19,28 @@ function CartBody({books, setBooks}) {
         setIsModalOpen(false);
         setSelectedRowKeys([]);
       };
+
+      const onOk = () => {
+        setIsModalOpen(false);
+        setSelectedRowKeys([]);
+        setCartItems();
+      };
     
       const onSelectChange = (newSelectedRowKeys) => {
         setSelectedRowKeys(newSelectedRowKeys);
       };
     
-      const onNumberChange = (id, newNumber) => {
-        const newBooks = books.map(item => {
-            if (item.book.id === id) {
-              return { ...item, number: newNumber};
-            } else {
-              return item;
+      const onNumberChange = async (id, newNumber) => {
+        let res = await changeItemNumber(id, newNumber);
+        if (res.ok) {
+          const newBooks = books.map(item => {
+            if (item.id === id) {
+              item.number = newNumber;
             }
+            return item;
           });
-        setBooks(newBooks);
+          setBooks(newBooks);
+        }
       }
     
       const onDelete = (id) => {
@@ -48,24 +57,27 @@ function CartBody({books, setBooks}) {
             title="下单" 
             open={isModalOpen} 
             onCancel={onCancel}  
-            onOk={onCancel} 
             footer={null}
         >
-            <OrderForm></OrderForm>
+            <OrderForm 
+              selectedRowKeys={selectedRowKeys}
+              books={books}
+              onOk={onOk}
+            />
         </Modal> ,
 
         <>
-            {books.length === 0? 
-                <p>购物车为空</p> :
-                <CartTable 
-                    rowSelection={{
-                        selectedRowKeys,
-                        onChange: onSelectChange,
-                    }}
-                    books={books} 
-                    onNumberChange={onNumberChange} 
-                    onDelete={onDelete}
-                />
+            {books.length ? 
+              <CartTable 
+                  rowSelection={{
+                      selectedRowKeys,
+                      onChange: onSelectChange,
+                  }}
+                  books={books} 
+                  onNumberChange={onNumberChange} 
+                  onDelete={onDelete}
+              /> :
+                <p>购物车为空</p> 
             }
         </>,
 

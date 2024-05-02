@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CartBody from '../components/cart_body';
 import '../css/cart.css';
 import '../css/global.css';
-import { getCartItems } from '../service/cart';
+import { getCart } from '../service/cart';
 
 const { Search } = Input;
 
@@ -11,7 +11,7 @@ function Cart (){
   const [books, setBooks] = useState([]);
 
   const setCartItems = async () => {
-    let cartItems = await getCartItems();
+    let cartItems = await getCart();
     if (cartItems) {
       setBooks(cartItems);
     }
@@ -31,7 +31,7 @@ function Cart (){
                 size="large"
             />
             
-            <CartBody books={books} setBooks={setBooks}/>
+            <CartBody books={books} setBooks={setBooks} setCartItems={setCartItems}/>
         </div>
     </div>
   );

@@ -14,7 +14,7 @@ function Home() {
     const setAllBooks = async () => {
         let allBooks = await getAllBooks();
         if (allBooks) {
-            setData(allBooks);
+            setData(allBooks.books);
         }
     }
 

@@ -1,7 +1,7 @@
-import { PREFIX, getJson } from "./common";
+import { getJson } from "./common";
 
 export async function getUser() {
-    const url = `${PREFIX}/user/me`;
+    const url = `https://10.119.12.209:8080/api/user/me`;
     let result;
 
     try {

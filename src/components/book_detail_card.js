@@ -36,7 +36,7 @@ function BookDetailCard ({book,showModal}) {
                         <Col span={6} offset={2}>
                             <Divider orientation="left" orientationMargin="0">ISBN编号</Divider>
                             <Paragraph>
-                                {book.id}
+                                {book.isbn}
                             </Paragraph>
                         </Col>
                     </Row>

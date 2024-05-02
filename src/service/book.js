@@ -1,37 +1,29 @@
+import { PREFIX, getJson } from './common';
+
 export async function getAllBooks() {
-    let result;
+    const url = `${PREFIX}/books`;
+    let res;
 
-    result = [];
-
-    for(var i = 1; i <= 12; i++){
-        result.push({
-            id : i,
-            title: `Title ${i}`,
-            author: `author ${i}`,
-            description: `Description ${i}`,
-            price: i * 4.5,
-            cover: `books/book${i}.jpg` ,
-            sales: i,
-        })
+    try {
+        res = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        res = null;
     }
 
-    return result;
+    return res;
 }
 
 export async function getBookById(id) {
-    // const url = `${PREFIX}/book/${id}`;
-    let result;
+    const url = `${PREFIX}/books/${id}`;
+    let book;
 
-    result = {
-        id : id,
-        title: `Title ${id}`,
-        author: `author ${id}`,
-        description: `Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description Description ${id}`,
-        price: id * 4.5,
-        cover: `http://localhost:3000/books/book${id}.jpg`,
-        sales: id,
-        stock: id * 10,
+    try {
+        book = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        book = null;
     }
 
-    return result;
+    return book;
 }

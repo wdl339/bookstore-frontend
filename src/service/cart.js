@@ -1,25 +1,29 @@
+import { DUMMY_RESPONSE, getJson, PREFIX, put } from './common';
 
-export async function getCartItems() {
-    // const url = `${PREFIX}/book/${id}`;
-    let result;
+export async function getCart() {
+    const url = `${PREFIX}/cart`;
+    let cart;
 
-    result = [];
-
-    for(var i = 1; i <= 10; i++){
-        result.push({
-            id : i,
-            book : {
-              id : i,
-              title: `Title ${i}`,
-              author: `author ${i}`,
-              description: `Description ${i}`,
-              price: i * 4.5,
-              cover: `books/book${i}.jpg`,
-              sales: i,
-            },
-            number: i,
-        })
+    try {
+        cart = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        cart = [];
     }
 
-    return result;
+    return cart;
+}
+
+export async function changeItemNumber(id, number) {
+    const url = `${PREFIX}/cart/${id}?number=${number}`;
+    let res;
+
+    try {
+        res = await put(url);
+    } catch (e) {
+        console.log(e);
+        res = DUMMY_RESPONSE;
+    }
+
+    return res;
 }

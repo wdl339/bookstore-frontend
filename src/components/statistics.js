@@ -3,7 +3,7 @@ function CartStatistics({selectedRowKeys, books}) {
     const getTotalPrice = (selectedRowKeys) => {
         let totalPrice = 0;
         selectedRowKeys.forEach((key) => {
-          const item = books.find(item => item.book.id === key);
+          const item = books.find(item => item.id === key);
           if (item) {
             totalPrice += item.book.price * item.number;
           }

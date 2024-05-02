@@ -1,7 +1,7 @@
-import { PREFIX, post, put } from "./common";
+import { post, put } from "./common";
 
 export async function login(username, password) {
-    const url = `${PREFIX}/login`;
+    const url = `https://10.119.12.209:8080/api/login`;
     let result;
 
     try {
@@ -17,7 +17,7 @@ export async function login(username, password) {
 }
 
 export async function logout() {
-    const url = `${PREFIX}/logout`;
+    const url = `https://10.119.12.209:8080/api/logout`;
     let result;
 
     try {

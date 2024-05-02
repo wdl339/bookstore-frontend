@@ -1,29 +1,23 @@
 import { Table } from 'antd';
 import React from 'react';
 import { getTimeStr } from '../util/time';
-import BookCartCard from './book_cart_card';
+import { BookOrderCardList } from './book_cart_card';
 
 function OrderTable({orders}) {
 
     const columns = [
         {
+          title: '订单号',
+          dataIndex: 'id',
+        },
+        {
           title: '信息',
-          dataIndex: ['item','book'],
-          render : book => <BookCartCard book={book}/>
-        },
-        {
-          title: '单价',
-          dataIndex: ['item','book','price'],
-        },
-        {
-          title: '数量',
-          dataIndex: ['item','number'],
+          dataIndex: 'items',
+          render : items => <BookOrderCardList items={items}/>
         },
         {
             title: '总价',
-            dataIndex: '',
-            render: (text, record) => record.item.number * record.item.book.price,
-            sorter: (a, b) => a.item.number * a.item.book.price - b.item.number * b.item.book.price,
+            dataIndex: 'totalPrice',
         },
         {
             title: '收件人',
@@ -31,7 +25,7 @@ function OrderTable({orders}) {
         },
           {
             title: '联系方式',
-            dataIndex: 'tel',
+            dataIndex: 'phone',
           },
           {
             title: '收货地址',

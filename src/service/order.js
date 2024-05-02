@@ -1,32 +1,29 @@
+import { DUMMY_RESPONSE, PREFIX, getJson, post } from './common';
 
-export async function getOrderItems() {
-    // const url = `${PREFIX}/book/${id}`;
-    let result;
+export async function getOrders() {
+  const url = `${PREFIX}/orders`;
+  let orders;
 
-    result = [];
+  try {
+      orders = await getJson(url);
+  } catch (e) {
+      console.log(e);
+      orders = [];
+  }
 
-    for(var i = 1; i <= 10; i++){
-        result.push({
-            "id": i,
-            "receiver": `Sir ${i}`,
-            "address": `Street ${i}`,
-            "tel": `${i}0000000000`,
-            "createAt": "2024-02-25T08:03:28.278Z",
-            "item": {
-              "id" : i,
-              "book": {
-                "id": i,
-                "title": `Title ${i}`,
-                "author": `author ${i}`,
-                "description": `Description ${i}`,
-                "price": i * 4.5,
-                "cover": `books/book${i}.jpg`,
-                "sales": i,
-              },
-              "number" : i,
-            }
-        })
-    }
+  return orders;
+}
 
-    return result;
+export async function submitOrder(data) {
+  const url = `${PREFIX}/orders`;
+  let res;
+
+  try {
+      res = await post(url, data);
+  } catch (e) {
+      console.log(e);
+      res = DUMMY_RESPONSE;
+  }
+
+  return res;
 }

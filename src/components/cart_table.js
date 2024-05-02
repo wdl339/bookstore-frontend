@@ -1,6 +1,6 @@
 import { Button, InputNumber, Table } from 'antd';
 import React from 'react';
-import BookCartCard from './book_cart_card';
+import { BookCartCard } from './book_cart_card';
 
 function CartTable({ books,rowSelection,onNumberChange,onDelete}) {
 
@@ -24,7 +24,7 @@ function CartTable({ books,rowSelection,onNumberChange,onDelete}) {
               defaultValue={number} 
               value={number} 
               onChange={(newNumber) => {
-                  onNumberChange(item.book.id, newNumber);
+                  onNumberChange(item.id, newNumber);
               }} 
             />
         },
@@ -59,7 +59,7 @@ function CartTable({ books,rowSelection,onNumberChange,onDelete}) {
                 pageSize: 5, 
                 position: ['bottomCenter']
             }} 
-            rowKey={record => record.book.id}
+            rowKey={record => record.id}
         />
     );
 }

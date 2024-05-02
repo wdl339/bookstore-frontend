@@ -2,7 +2,7 @@ import { DatePicker, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import OrderTable from '../components/order_table';
 import '../css/global.css';
-import { getOrderItems } from '../service/order';
+import { getOrders } from '../service/order';
 const { RangePicker } = DatePicker;
 
 const { Search } = Input;
@@ -15,10 +15,11 @@ function Order (){
   }, []);
 
   const setOrderItems = async () => {
-    let orderItems = await getOrderItems();
-    if (orderItems) {
-      serOrders(orderItems);
+    let orders = await getOrders();
+    if (orders) {
+      serOrders(orders);
     }
+    console.log(orders);
   }
 
   const onChange = (value, dateString) => {
@@ -48,10 +49,10 @@ function Order (){
               onOk={onOk}
             />
 
-            {orders.length === 0 ? 
-              <p>暂无订单</p>
-              :
+            {orders.length ? 
               <OrderTable orders={orders}/>
+              :
+              <p>暂无订单</p>
             }
         </div>
     </div>

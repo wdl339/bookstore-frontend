@@ -1,5 +1,6 @@
 import { Button, Form, Input, Space } from 'antd';
 import React from 'react';
+import { submitOrder } from '../service/order';
 
 const SubmitButton = ({ form }) => {
   const [submittable, setSubmittable] = React.useState(false);
@@ -8,14 +9,14 @@ const SubmitButton = ({ form }) => {
   React.useEffect(() => {
     form.validateFields({
         validateOnly: true,
-      }) //所有字段都通过验证，Promise会被解决，否则会被拒绝
+      }) 
       .then(
         () => {
           setSubmittable(true);
-        }, //所有字段都通过验证
+        }, 
         () => {
           setSubmittable(false);
-        }, //有字段未通过验证
+        }, 
       );
   }, [values,form]);
   return (
@@ -25,11 +26,37 @@ const SubmitButton = ({ form }) => {
   );
 };
 
-function OrderForm() {
+
+function OrderForm({selectedRowKeys, books, onOk}) {
     const [form] = Form.useForm();
     const validateMessages = {
       required: '请输入${label}',
     };
+
+    const getTotalPrice = () => {
+      let totalPrice = 0;
+      selectedRowKeys.forEach((key) => {
+        const item = books.find(item => item.id === key);
+        if (item) {
+          totalPrice += item.book.price * item.number;
+        }
+      });
+      return totalPrice;
+    }
+
+    const onSubmit = (values) => {
+        const data = {
+          receiver: values.receiver,
+          phone: values.phone,
+          address: values.address,
+          totalPrice: getTotalPrice(),
+          itemIds: selectedRowKeys,
+        };
+        let res = submitOrder(data);
+        if (res.ok) {
+          onOk();
+        }
+    }
 
     return (
     <Form 
@@ -38,6 +65,7 @@ function OrderForm() {
       layout="vertical" 
       autoComplete="off" 
       validateMessages={validateMessages}
+      onFinish={onSubmit}
     >
       <Form.Item
         name="receiver"

@@ -46,5 +46,10 @@ export async function post(url, data) {
     return res.json();
 }
 
-export const BASEURL = 'https://10.119.12.209:8080' ?? 'http://localhost:8080';
+// export const BASEURL = 'https://10.119.12.209:8080' ?? 'http://localhost:8080';
+export const BASEURL = 'http://localhost:8080';
 export const PREFIX = `${BASEURL}/api`;
+export const DUMMY_RESPONSE = {
+    ok: false,
+    message: "网络错误！"
+}
