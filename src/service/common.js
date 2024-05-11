@@ -6,6 +6,11 @@ export async function getJson(url) {
         },
         credentials: "include",
     });
+    if (res.status === 401) {
+        console.log('Unauthorized');
+        window.location.href = '/login';
+        throw new Error('Unauthorized');
+    }
     return res.json();
 }
 
@@ -17,6 +22,10 @@ export async function get(url) {
         },
         credentials: "include",
     });
+    if (res.status === 401) {
+        window.location.href = '/login';
+        throw new Error('Unauthorized');
+    }
     return res;
 }
 
@@ -29,6 +38,10 @@ export async function put(url, data){
         body: JSON.stringify(data),
         credentials: "include",
     });
+    if (res.status === 401) {
+        window.location.href = '/login';
+        throw new Error('Unauthorized');
+    }
     return res.json();
 
 }
@@ -43,6 +56,10 @@ export async function post(url, data) {
         body: JSON.stringify(data),
         credentials: "include",
     });
+    if (res.status === 401) {
+        window.location.href = '/login';
+        throw new Error('Unauthorized');
+    }
     return res.json();
 }
 

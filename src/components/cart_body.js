@@ -63,6 +63,7 @@ function CartBody({books, setBooks, setCartItems}) {
               selectedRowKeys={selectedRowKeys}
               books={books}
               onOk={onOk}
+              onCancel={onCancel} 
             />
         </Modal> ,
 

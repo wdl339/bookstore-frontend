@@ -1,17 +1,3 @@
-import { getJson } from "./common";
-
-export async function getUser() {
-    const url = `https://10.119.12.209:8080/api/user/me`;
-    let result;
-
-    try {
-        result = await getJson(url);
-    } catch (e) {
-        console.log(e);
-    }
-
-    return result;
-}
 
 export async function getProfile() {
     let result;

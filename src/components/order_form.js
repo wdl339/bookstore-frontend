@@ -1,6 +1,7 @@
-import { Button, Form, Input, Space } from 'antd';
+import { Button, Form, Input, Space, message } from 'antd';
 import React from 'react';
 import { submitOrder } from '../service/order';
+import { onResponse } from '../util/response';
 
 const SubmitButton = ({ form }) => {
   const [submittable, setSubmittable] = React.useState(false);
@@ -27,8 +28,9 @@ const SubmitButton = ({ form }) => {
 };
 
 
-function OrderForm({selectedRowKeys, books, onOk}) {
+function OrderForm({selectedRowKeys, books, onOk, onCancel}) {
     const [form] = Form.useForm();
+    const [messageApi, contextHolder] = message.useMessage();
     const validateMessages = {
       required: '请输入${label}',
     };
@@ -44,7 +46,7 @@ function OrderForm({selectedRowKeys, books, onOk}) {
       return totalPrice;
     }
 
-    const onSubmit = (values) => {
+    const onSubmit = async (values) => {
         const data = {
           receiver: values.receiver,
           phone: values.phone,
@@ -52,10 +54,8 @@ function OrderForm({selectedRowKeys, books, onOk}) {
           totalPrice: getTotalPrice(),
           itemIds: selectedRowKeys,
         };
-        let res = submitOrder(data);
-        if (res.ok) {
-          onOk();
-        }
+        let res = await submitOrder(data);
+        onResponse(res, messageApi, onOk, onCancel);
     }
 
     return (
@@ -67,6 +67,7 @@ function OrderForm({selectedRowKeys, books, onOk}) {
       validateMessages={validateMessages}
       onFinish={onSubmit}
     >
+      {contextHolder}
       <Form.Item
         name="receiver"
         label="收货人"

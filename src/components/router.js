@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import BookDetail from "../page/book";
 import Cart from "../page/cart";
@@ -8,27 +8,26 @@ import Login from "../page/login";
 import Manage from '../page/manage';
 import Order from "../page/order";
 import Profile from '../page/profile';
-import { getUser } from '../service/user';
 
 function Router() {
-    const [user, setUser] = useState(null);
-    const checkUser = async () => {
-        let res = await getUser();
-        if (!res) {
-            setUser(null);
-            console.log('未登录');
-        } else {
-            setUser(res);
-            console.log('已登录');
-        }
-    }
+    // const [user, setUser] = useState(false);
+    // const checkUser = async () => {
+    //     let res = await getUser();
+    //     if (!res) {
+    //         setUser(false);
+    //         console.log('未登录');
+    //     } else {
+    //         setUser(true);
+    //         console.log('已登录');
+    //     }
+    // }
 
-    useEffect(() => {
-        checkUser();
-    }, []);
+    // useEffect(() => {
+    //     checkUser();
+    // }, []);
 
     return (
-        user ?
+        // user ?
         <Routes>
             <Route path="/" element={<Home/>} index/>
             <Route path="/login" element={<Login login={true}/>} />
@@ -41,12 +40,13 @@ function Router() {
             <Route path="/myData" element={<MyData/>} />
             <Route path="/webData" element={<WebData/>} />
             <Route path="/*" element={<Home />} />
-        </Routes> :
-        <Routes>
-            <Route path="/login" element={<Login login={true}/>} />
-            <Route path="/register" element={<Login login={false}/>} />
-            <Route path="/*" element={<Login login={true}/>} />
-        </Routes>
+        </Routes> 
+        //:
+        // <Routes>
+        //     <Route path="/login" element={<Login login={true}/>} />
+        //     <Route path="/register" element={<Login login={false}/>} />
+        //     <Route path="/*" element={<Login login={true}/>} />
+        // </Routes>
     );
 }
 

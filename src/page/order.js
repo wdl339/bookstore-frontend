@@ -19,7 +19,6 @@ function Order (){
     if (orders) {
       serOrders(orders);
     }
-    console.log(orders);
   }
 
   const onChange = (value, dateString) => {

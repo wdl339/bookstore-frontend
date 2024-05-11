@@ -1,14 +1,21 @@
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import React from 'react';
 import '../css/login.css';
+import { register } from '../service/login';
 
 function RegisterForm() {
     
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-        window.location.href = '/';
-    };
+    const onFinish = async (values) => {
+        register(values.username, values.password, values.phone, values.email).then(result => {
+            if (result.ok) {
+                alert('注册成功！');
+                window.location.href = '/login';
+            } else {
+                alert(result.message);
+            }
+        });
+    }
 
     return (
         <Form 
@@ -73,6 +80,22 @@ function RegisterForm() {
                     prefix={<LockOutlined />} 
                     type="password" 
                     placeholder="再次确认密码" 
+                    className='input'
+                />
+            </Form.Item>
+
+            <Form.Item
+                name="phone"
+                rules={[
+                {
+                    required: true,
+                    message: '请输入手机号!',
+                },
+                ]}
+            >
+                <Input
+                    prefix={<PhoneOutlined />} 
+                    placeholder="手机号" 
                     className='input'
                 />
             </Form.Item>
