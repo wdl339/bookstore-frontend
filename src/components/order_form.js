@@ -1,13 +1,11 @@
-import { Button, Form, Input, Space, message } from 'antd';
-import React from 'react';
-import { submitOrder } from '../service/order';
-import { onResponse } from '../util/response';
+import { Button, Form, Input, Space } from 'antd';
+import React, { useEffect, useState } from 'react';
 
 const SubmitButton = ({ form }) => {
-  const [submittable, setSubmittable] = React.useState(false);
+  const [submittable, setSubmittable] = useState(false);
 
   const values = Form.useWatch([], form);
-  React.useEffect(() => {
+  useEffect(() => {
     form.validateFields({
         validateOnly: true,
       }) 
@@ -28,35 +26,22 @@ const SubmitButton = ({ form }) => {
 };
 
 
-function OrderForm({selectedRowKeys, books, onOk, onCancel}) {
+function OrderForm({onSubmit}) {
     const [form] = Form.useForm();
-    const [messageApi, contextHolder] = message.useMessage();
     const validateMessages = {
       required: '请输入${label}',
     };
 
-    const getTotalPrice = () => {
-      let totalPrice = 0;
-      selectedRowKeys.forEach((key) => {
-        const item = books.find(item => item.id === key);
-        if (item) {
-          totalPrice += item.book.price * item.number;
-        }
-      });
-      return totalPrice;
-    }
-
-    const onSubmit = async (values) => {
-        const data = {
-          receiver: values.receiver,
-          phone: values.phone,
-          address: values.address,
-          totalPrice: getTotalPrice(),
-          itemIds: selectedRowKeys,
-        };
-        let res = await submitOrder(data);
-        onResponse(res, messageApi, onOk, onCancel);
-    }
+    // const getTotalPrice = () => {
+    //   let totalPrice = 0;
+    //   selectedRowKeys.forEach((key) => {
+    //     const item = books.find(item => item.id === key);
+    //     if (item) {
+    //       totalPrice += item.book.price * item.number;
+    //     }
+    //   });
+    //   return totalPrice;
+    // }
 
     return (
     <Form 
@@ -67,7 +52,6 @@ function OrderForm({selectedRowKeys, books, onOk, onCancel}) {
       validateMessages={validateMessages}
       onFinish={onSubmit}
     >
-      {contextHolder}
       <Form.Item
         name="receiver"
         label="收货人"

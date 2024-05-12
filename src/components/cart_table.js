@@ -35,12 +35,12 @@ function CartTable({ books,rowSelection,onNumberChange,onDelete}) {
         },
         {
           title: '操作',
-          dataIndex: 'book',
-          render: book => 
+          dataIndex: 'item',
+          render: item => 
             <Button 
               type="primary" 
               onClick={() => {
-                onDelete(book.id);
+                onDelete(item.id);
               }} 
               danger
               shape="round" 

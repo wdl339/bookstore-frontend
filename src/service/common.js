@@ -63,6 +63,22 @@ export async function post(url, data) {
     return res.json();
 }
 
+export async function del(url, data) {
+    let res = await fetch(url, { 
+        method: "DELETE", 
+        headers: { 
+            "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(data),
+        credentials: "include", 
+    });
+    if (res.status === 401) {
+        window.location.href = '/login';
+        throw new Error('Unauthorized');
+    }
+    return res.json();
+}
+
 // export const BASEURL = 'https://10.119.12.209:8080' ?? 'http://localhost:8080';
 export const BASEURL = 'http://localhost:8080';
 export const PREFIX = `${BASEURL}/api`;

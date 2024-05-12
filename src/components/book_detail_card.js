@@ -1,18 +1,23 @@
 import { MoneyCollectOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Button, Col, Divider, Image, InputNumber, Row, Space, Typography } from 'antd';
-import React from 'react';
+import { Button, Col, Divider, Image, InputNumber, Row, Space, Typography, message } from 'antd';
+import React, { useState } from 'react';
 import '../css/book_detail.css';
+import { addItemToCart } from '../service/cart';
+import { onResponse } from '../util/response';
 const { Title, Paragraph } = Typography;
 
-function BookDetailCard ({book,showModal}) {
+function BookDetailCard ({book,showModal, setOrderNum}) {
+    const [number, setNumber] = useState(1);
+    const [messageApi, contextHolder] = message.useMessage();
 
-    const addToCart = () => {
-        console.log('add to cart');
-        window.location.href = '/cart';
+    const addToCart = async () => {
+        let res = await addItemToCart(book.id, number);
+        onResponse(res, messageApi, null, null);
     }
 
     return(
         <Row>
+            {contextHolder}
             <Col span={8}>
                 <Image
                     alt = {book.title}
@@ -73,7 +78,7 @@ function BookDetailCard ({book,showModal}) {
                                 min={1} 
                                 defaultValue={1} 
                                 size='large'
-                                onChange={value => console.log(value)}
+                                onChange={value => {setNumber(value); setOrderNum(value);}}
                             />
                         </Col>
                     </Row>

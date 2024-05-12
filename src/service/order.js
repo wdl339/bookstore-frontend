@@ -14,8 +14,22 @@ export async function getOrders() {
   return orders;
 }
 
-export async function submitOrder(data) {
+export async function submitOrderFromCart(data) {
   const url = `${PREFIX}/orders`;
+  let res;
+
+  try {
+      res = await post(url, data);
+  } catch (e) {
+      console.log(e);
+      res = DUMMY_RESPONSE;
+  }
+
+  return res;
+}
+
+export async function submitOrderFromBook(data, bookId) {
+  const url = `${PREFIX}/orders/${bookId}`;
   let res;
 
   try {

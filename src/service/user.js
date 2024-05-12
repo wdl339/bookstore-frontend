@@ -1,19 +1,17 @@
+import { getJson, PREFIX } from './common';
 
 export async function getProfile() {
-    let result;
+    const url = `${PREFIX}/user/profile`;
+    let me = null;
 
-    result = {
-        name: "张三",
-        email: "123@qq.com",
-        avatar: "http://localhost:3000/avatar.jpg",
-        phone: "12345678901",
-        address: "江川路800号上海交通大学",
-        balance: 100,
-        level: 1,
-        description: "这是一个有趣的人"
+    try {
+        me = await getJson(url);
+        console.log(me);
+    } catch(e) {
+        console.log(e);
     }
-
-    return result;
+    
+    return me;
 }
 
 export async function checkPassword(password) {
