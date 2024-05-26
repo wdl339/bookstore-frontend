@@ -1,37 +1,31 @@
+import { getJson, PREFIX } from './common';
 
-export async function getTopBooks(){
-    let result;
+export async function getTopBooks(startTime, endTime, topNumber){
+    const url = `${PREFIX}/books/rank?startTime=${startTime}&endTime=${endTime}&topNumber=${topNumber}`;
+    let res;
 
-    result = [];
-
-    for(var i = 1; i <= 10; i++){
-        result.push({
-              id : i,
-              title: `Title ${i}`,
-              author: `author ${i}`,
-              description: `Description ${i}`,
-              price: i * 4.5,
-              cover: `books/book${i}.jpg`,
-              sales: (11 - i) * 10,
-        })
+    try {
+        res = await getJson(url);
+        console.log(res);
+    } catch (e) {
+        console.log(e);
+        res = null;
     }
 
-    return result;
+    return res;
 }
 
-export async function getTopUsers(){
-    let result;
+export async function getTopUsers(startTime, endTime, topNumber){
+    const url = `${PREFIX}/user/rank?startTime=${startTime}&endTime=${endTime}&topNumber=${topNumber}`;
+    let res;
 
-    result = [];
-
-    for(var i = 1; i <= 10; i++){
-        result.push({
-              id : i,
-              nickName: `Sir ${i}`,
-              balance: i * 100,
-              number: (11 - i) * 10,
-        })
+    try {
+        res = await getJson(url);
+        console.log(res);
+    } catch (e) {
+        console.log(e);
+        res = null;
     }
 
-    return result;
+    return res;
 }

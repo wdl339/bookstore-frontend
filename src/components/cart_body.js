@@ -74,7 +74,6 @@ function CartBody({books, setBooks, setCartItems}) {
       const hasSelected = selectedRowKeys.length > 0;
 
     return [
-        {contextHolder},
         <Modal 
             title="下单" 
             open={isModalOpen} 
@@ -87,6 +86,7 @@ function CartBody({books, setBooks, setCartItems}) {
         </Modal> ,
 
         <>
+          {contextHolder}
             {books.length ? 
               <CartTable 
                   rowSelection={{

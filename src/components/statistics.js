@@ -18,7 +18,7 @@ function CartStatistics({selectedRowKeys, books}) {
             </span>
             &nbsp;&nbsp;&nbsp; 合计：
             <span className="red-big-text">
-            {`${getTotalPrice(selectedRowKeys)}元`}
+            {`${getTotalPrice(selectedRowKeys) / 100}元`}
             </span>
         </p> 
     );
@@ -32,7 +32,7 @@ function RankStatistics({orders}) {
       <h3>购书总本数：
           <span className="red-big-text">{`${totalBooks}本`}</span>
           &nbsp;&nbsp;&nbsp; 总金额：
-          <span className="red-big-text">{`${totalPrice}元`}</span>
+          <span className="red-big-text">{`${totalPrice / 100}元`}</span>
       </h3> 
     );
 }

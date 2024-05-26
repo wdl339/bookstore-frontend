@@ -31,6 +31,7 @@ export async function submitOrderFromCart(data) {
 export async function submitOrderFromBook(data, bookId) {
   const url = `${PREFIX}/orders/${bookId}`;
   let res;
+  console.log(data);
 
   try {
       res = await post(url, data);

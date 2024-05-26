@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Axis, Bar, Chart, Tooltip } from 'viser-react';
 
-function RankChart({data,yTitle,title}) {
+function RankChart({data, yTitle, title}) {
 
     const scale = [{
         dataKey: 'y',
@@ -23,7 +23,7 @@ function RankChart({data,yTitle,title}) {
                     <Bar position="x*y" />
                 </Chart>
             ), document.getElementById('mountNode'+title));
-       }, []);
+       }, [data]);
         
 
     return (

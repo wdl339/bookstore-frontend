@@ -6,6 +6,7 @@ export async function getJson(url) {
         },
         credentials: "include",
     });
+    // console.log(res);
     if (res.status === 401) {
         console.log('Unauthorized');
         window.location.href = '/login';
@@ -79,7 +80,6 @@ export async function del(url, data) {
     return res.json();
 }
 
-// export const BASEURL = 'https://10.119.12.209:8080' ?? 'http://localhost:8080';
 export const BASEURL = 'http://localhost:8080';
 export const PREFIX = `${BASEURL}/api`;
 export const DUMMY_RESPONSE = {

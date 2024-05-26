@@ -11,39 +11,53 @@ function WebData(){
     const [books, setBooks] = useState([]);
     const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        setTopBooks();
-        setTopUsers();
-    }, []);
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
 
-    const setTopBooks = async () => {
-        let allBooks = await getTopBooks();
-        if (allBooks) {
-            setBooks(allBooks);
-        }
-    }
-
-    const setTopUsers = async () => {
-        let allUsers = await getTopUsers();
-        if (allUsers) {
-            setUsers(allUsers);
-        }
-    }
-
-    const dataBook = books.map(book => ({
+    let dataBook = books.map(book => ({
         y: book.sales,
         x: book.title,
     }));
 
-    const dataUser = users.map(user => ({
+    let dataUser = users.map(user => ({
         y: user.number,
-        x: user.nickName,
+        x: user.name,
     }));
 
+    useEffect(() => {
+        setTopBooks();
+        setTopUsers();
+    }, [startTime, endTime]);
+
+    const setTopBooks = async () => {
+        let allBooks = await getTopBooks(startTime, endTime, 10);
+        // console.log(allBooks);
+        if (allBooks) {
+            setBooks(allBooks);
+            dataBook = allBooks.map(book => ({
+                y: book.sales,
+                x: book.title,
+            }));
+        }
+    }
+
+    const setTopUsers = async () => {
+        let allUsers = await getTopUsers(startTime, endTime, 10);
+        if (allUsers) {
+            setUsers(allUsers);
+            dataUser = allUsers.map(user => ({
+                y: user.number,
+                x: user.name,
+            }));
+        }
+    }
+
     const onChange = (value, dateString) => {
-        console.log('Selected Time: ', value);
         console.log('Formatted Selected Time: ', dateString);
+        setStartTime(dateString[0]);
+        setEndTime(dateString[1]);
     };
+
     const onOk = (value) => {
         console.log('onOk: ', value);
     };
@@ -53,14 +67,16 @@ function WebData(){
             <div className='content-container'>
                 <RangePicker
                     showTime={{
-                        format: 'HH:mm',
+                        format: 'HH:mm:ss',
                     }}
-                    format="YYYY-MM-DD HH:mm"
+                    format="YYYY-MM-DDTHH:mm:ss"
                     onChange={onChange}
                     onOk={onOk}
                 />
-                {books.length !== 0 && <RankChart data={dataBook} yTitle={'销售量'} title={"热销榜"}/>}
-                {users.length !== 0 && <RankChart data={dataUser} yTitle={'购书量'} title={"消费榜"}/>}
+                {books.length !== 0 ? <RankChart data={dataBook} yTitle={'销售量'} title={"热销榜"}/> : 
+                    <div>所选时间段内热销榜无书</div>}
+                {users.length !== 0 ? <RankChart data={dataUser} yTitle={'购书量'} title={"消费榜"}/> :
+                    <div>所选时间段内消费榜无用户</div>}
             </div>
         </div>
     );

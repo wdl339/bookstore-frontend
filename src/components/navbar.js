@@ -1,14 +1,29 @@
 import { BarChartOutlined, HomeOutlined, PayCircleOutlined, ShoppingCartOutlined, UserOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { Avatar, Col, Menu, Row } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../css/navbar.css';
+import { getAvatar } from '../service/user';
 
 
 const Navbar = () => {
   const location = useLocation();
   const current = location.pathname.split('/');
-  const avatarUrl = 'http://localhost:3000/avatar.jpg';
+  const [avatarUrl, setAvatarUrl] = useState('');
+
+  const getUserAvatar = async () => {
+    if (window.location.pathname === '/login' || window.location.pathname === '/register') {
+      return;
+    }
+    const res = await getAvatar();
+    if (res) {
+      setAvatarUrl(res.avatar);
+    }
+  };
+
+  useEffect(() => {
+    getUserAvatar();
+  }, []);
 
   const items = [
     // {

@@ -61,7 +61,7 @@ function OrderForm({onSubmit}) {
           },
         ]}
       >
-        <Input />
+        <Input maxLength={50}/>
       </Form.Item>
       <Form.Item
         name="phone"
@@ -72,7 +72,7 @@ function OrderForm({onSubmit}) {
           },
         ]}
       >
-        <Input />
+        <Input maxLength={20}/>
       </Form.Item>
       <Form.Item
         name="address"
@@ -83,7 +83,7 @@ function OrderForm({onSubmit}) {
           },
         ]}
       >
-        <Input />
+        <Input maxLength={100}/>
       </Form.Item>
       <Form.Item>
         <Space>

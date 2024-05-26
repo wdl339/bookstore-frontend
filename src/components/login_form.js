@@ -1,18 +1,21 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import React from 'react';
 import '../css/login.css';
 import { login } from '../service/login';
+import { onResponse } from '../util/response';
 
 function LoginForm() {
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onLoginSuccess = () => {
+        window.location.href = '/';
+    }
+
     const onFinish = (values) => {
         const {username, password} = values;
         login(username, password).then(result => {
-            if (result.ok) {
-                window.location.href = '/';
-            } else {
-                alert(result.message);
-            }
+            onResponse(result, messageApi, onLoginSuccess, null);
         });
     }
 
@@ -22,6 +25,7 @@ function LoginForm() {
             initialValues={{remember: true,}} 
             onFinish={onFinish}
         >
+            {contextHolder}
             <Form.Item
                 name="username"
                 rules={[
@@ -35,6 +39,7 @@ function LoginForm() {
                     prefix={<UserOutlined />} 
                     placeholder="用户名" 
                     className='input'
+                    maxLength={255}
                 />
             </Form.Item>
 
@@ -52,10 +57,11 @@ function LoginForm() {
                     type="password" 
                     placeholder="密码" 
                     className='input'
+                    maxLength={255}
                 />
             </Form.Item>
 
-            <Form.Item>
+            {/* <Form.Item>
                 <Form.Item 
                     name="remember" 
                     valuePropName="checked" 
@@ -65,7 +71,7 @@ function LoginForm() {
                 </Form.Item>
 
                 <a href="/register" className='forget-password'>忘记密码</a>
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item>
                 <Button 

@@ -1,19 +1,20 @@
 import { LockOutlined, MailOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, message } from 'antd';
 import React from 'react';
 import '../css/login.css';
 import { register } from '../service/login';
+import { onResponse } from '../util/response';
 
 function RegisterForm() {
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onRegisterSuccess = () => {
+        window.location.href = '/login';
+    }
     
     const onFinish = async (values) => {
         register(values.username, values.password, values.phone, values.email).then(result => {
-            if (result.ok) {
-                alert('注册成功！');
-                window.location.href = '/login';
-            } else {
-                alert(result.message);
-            }
+            onResponse(result, messageApi, onRegisterSuccess, null);
         });
     }
 
@@ -23,6 +24,7 @@ function RegisterForm() {
             initialValues={{remember: true,}} 
             onFinish={onFinish}
         >
+            {contextHolder}
             <Form.Item
                 name="username"
                 rules={[
@@ -36,6 +38,7 @@ function RegisterForm() {
                     prefix={<UserOutlined />} 
                     placeholder="用户名" 
                     className='input'
+                    maxLength={255}
                 />
             </Form.Item>
 
@@ -53,6 +56,7 @@ function RegisterForm() {
                     type="password" 
                     placeholder="密码" 
                     className='input'
+                    maxLength={255}
                 />
             </Form.Item>
 
@@ -81,6 +85,7 @@ function RegisterForm() {
                     type="password" 
                     placeholder="再次确认密码" 
                     className='input'
+                    maxLength={255}
                 />
             </Form.Item>
 
@@ -97,6 +102,7 @@ function RegisterForm() {
                     prefix={<PhoneOutlined />} 
                     placeholder="手机号" 
                     className='input'
+                    maxLength={20}
                 />
             </Form.Item>
 
@@ -117,6 +123,7 @@ function RegisterForm() {
                     prefix={<MailOutlined />} 
                     placeholder="邮箱" 
                     className='input'
+                    maxLength={255}
                 />
             </Form.Item>
 

@@ -13,6 +13,7 @@ function CartTable({ books,rowSelection,onNumberChange,onDelete}) {
         {
           title: '单价',
           dataIndex: ['book','price'],
+          render: price => price / 100,
         },
         {
           title: '数量',
@@ -31,11 +32,10 @@ function CartTable({ books,rowSelection,onNumberChange,onDelete}) {
         {
           title: '金额',
           dataIndex: 'number',
-          render: (number,item) => <span>{item.book.price * number}</span>,
+          render: (number,item) => <span>{item.book.price * number / 100}</span>,
         },
         {
           title: '操作',
-          dataIndex: 'item',
           render: item => 
             <Button 
               type="primary" 

@@ -1,4 +1,4 @@
-import { getJson, PREFIX } from './common';
+import { DUMMY_RESPONSE, getJson, PREFIX, put } from './common';
 
 export async function getProfile() {
     const url = `${PREFIX}/user/profile`;
@@ -14,23 +14,46 @@ export async function getProfile() {
     return me;
 }
 
-export async function checkPassword(password) {
-    // const url = `${PREFIX}/user/password`;
+export async function updateProfile(data) {
+    const url = `${PREFIX}/user/profile`;
     let result;
 
-    // try {
-    //     const response = await post(url, { password });
-    //     result = response.valid;
-    // } catch (e) {
-    //     console.log(e);
-    // }
-
-    if (password === '12345678')
-        result = true;
-    else
-        result = false;
+    try {
+        result = await put (url, data);
+    } catch(e) {
+        console.log(e);
+        result = DUMMY_RESPONSE;
+    }
 
     return result;
+}
+
+export async function changePassword(oldPassword, newPassword) {
+    const url = `${PREFIX}/user/password`;
+    let result;
+
+    try {
+        result = await put (url, { oldPassword, newPassword });
+    } catch(e) {
+        console.log(e);
+        result = DUMMY_RESPONSE;
+    }
+
+    return result;
+}
+
+export async function getAvatar() {
+    const url = `${PREFIX}/user/avatar`;
+    let res = null;
+
+    try {
+        res = await getJson(url);
+        console.log(res);
+    } catch(e) {
+        console.log(e);
+    }
+
+    return res;
 }
 
 export async function getAllUsers(){

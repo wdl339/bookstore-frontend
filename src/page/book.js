@@ -39,7 +39,7 @@ function BookDetail() {
           address: values.address,
           number: orderNum,
         };
-        let res = await submitOrderFromBook(data);
+        let res = await submitOrderFromBook(data, id);
         onResponse(res, messageApi, onOk, onOk);
     }
 

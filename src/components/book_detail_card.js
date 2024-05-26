@@ -69,7 +69,7 @@ function BookDetailCard ({book,showModal, setOrderNum}) {
                         <Col span={6}>
                             <Divider orientation="left" orientationMargin="0">价格</Divider>
                             <Paragraph>
-                                <span className="red-big-text"> {`${book.price}元`}</span> 
+                                <span className="red-big-text"> {`${book.price / 100}元`}</span> 
                             </Paragraph>
                         </Col>
                         <Col span={6} offset={2}>

@@ -2,12 +2,22 @@ import { UploadOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Image, Input, Row, Upload, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import '../css/profile.css';
+import { PREFIX } from '../service/common';
 import { logout } from '../service/login';
+import { updateProfile } from '../service/user';
+import { onResponse } from '../util/response';
 
 function ProfileTable({info,showModal}) {
 
     const [form] = Form.useForm();
     const [avatarUrl, setAvatarUrl] = useState();
+    const [loading, setLoading] = useState(false);
+
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onLogoutSuccess = () => {
+        window.location.href = '/login';
+    }
 
     useEffect(() => {
         form.setFieldsValue({
@@ -16,13 +26,20 @@ function ProfileTable({info,showModal}) {
             avatar: info?.avatar,
             phone: info?.phone,
             address: info?.address,
-            balance: info?.balance,
+            balance: info?.balance / 100,
             level: info?.level,
             description: info?.description
         });
 
         setAvatarUrl(info?.avatar);
-    }, [info, form, avatarUrl]);
+        console.log('setFormValue');
+    }, [info]);
+
+    const getBase64 = (img, callback) => {
+        const reader = new FileReader();
+        reader.addEventListener('load', () => callback(reader.result));
+        reader.readAsDataURL(img);
+    };
 
     const beforeUpload = (file) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -38,59 +55,88 @@ function ProfileTable({info,showModal}) {
 
     const onAvatarChange = (info) => {
         if (info.file.status === 'uploading') {
+            setLoading(true);
             return;
         }
         if (info.file.status === 'done') {
-            setAvatarUrl(URL.createObjectURL(info.file.originFileObj));
-            console.log(avatarUrl);
+            getBase64(info.file.originFileObj, (url) => {
+                setLoading(false);
+                setAvatarUrl(url);
+                window.location.reload();
+            });
         }
-    }
+    };
 
     const logoutUser = async () => {
         logout().then(result => {
-            if (result) {
-                window.location.href = '/login';
-            } else {
-                alert(result.message);
-            }
+            onResponse(result, messageApi, onLogoutSuccess, null);
         });
     }
+
+    const onSubmitProfile = async (values) => {
+        const data = {
+            name: values.name,
+            email: values.email,
+            phone: values.phone,
+            address: values.address,
+            description: values.description,
+        };
+        let res = await updateProfile(data);
+        onResponse(res, messageApi, null, null);
+    }
+
+    // const uploadButton = (
+    //     <button
+    //       style={{
+    //         border: 0,
+    //         background: 'none',
+    //       }}
+    //       type="button"
+    //     >
+    //       {loading ? <LoadingOutlined /> : <PlusOutlined />}
+    //       <div
+    //         style={{
+    //           marginTop: 8,
+    //         }}
+    //       >
+    //         Upload
+    //       </div>
+    //     </button>
+    // );
 
     return (
         <Form 
             form={form}
             name="profile"
+            onFinish={onSubmitProfile}
         >
+            {contextHolder}
             <Row>
                 <Col span={6}>
-                    <Form.Item
+                    {avatarUrl && <Image
+                        src={avatarUrl}
+                        alt="avatar"
+                        style={{ width: '70%' }}
+                    />}
+                    <Upload
                         name="avatar"
-                        label="头像"
-                        rules={[
-                            {
-                                required: true,
-                                message: '请上传头像',
-                            },
-                        ]}
-                    />
-                        <Image 
-                            src={avatarUrl} 
-                            alt="avatar"
-                        />
-                        <Upload
-                            name="avatar"
-                            beforeUpload={beforeUpload}
-                            onChange={onAvatarChange}
+                        // listType="picture-card"
+                        className="avatar-uploader"
+                        showUploadList={false}
+                        action={`${PREFIX}/user/avatar`}
+                        beforeUpload={beforeUpload}
+                        onChange={onAvatarChange}
+                        withCredentials={true}
+                        style={{ width: '100%' }}
+                    >
+                        <Button 
+                            type='primary'
+                            icon={<UploadOutlined />}
+                            className='upload-button'
                         >
-                            <Button 
-                                type='primary'
-                                icon={<UploadOutlined />}
-                                className='upload-button'
-                            >
-                                更新头像图片
-                            </Button>
-                        </Upload>
-                    <Form.Item/>
+                            {avatarUrl ? "更新头像图片" : "上传头像图片"}
+                        </Button>
+                    </Upload>
                 </Col>
                 <Col span={2}/>
                 <Col span={16}>
@@ -104,7 +150,7 @@ function ProfileTable({info,showModal}) {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input maxLength={20}/>
                     </Form.Item>
 
                     <Form.Item
@@ -121,7 +167,7 @@ function ProfileTable({info,showModal}) {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input maxLength={50}/>
                     </Form.Item>
 
                     <Form.Item
@@ -134,21 +180,21 @@ function ProfileTable({info,showModal}) {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input maxLength={20}/>
                     </Form.Item>
 
                     <Form.Item
                         name="address"
                         label="默认收货地址"
                     >
-                        <Input />
+                        <Input maxLength={100}/>
                     </Form.Item>
 
                     <Form.Item
                         name="description"
                         label="个性自述"
                     >
-                        <Input />
+                        <Input maxLength={100}/>
                     </Form.Item>
 
                     <Form.Item

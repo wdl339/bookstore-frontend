@@ -18,6 +18,7 @@ function OrderTable({orders}) {
         {
             title: '总价',
             dataIndex: 'totalPrice',
+            render: totalPrice => totalPrice / 100,
         },
         {
             title: '收件人',

@@ -1,6 +1,7 @@
-import { Button, Form, Input, Space } from 'antd';
+import { Button, Form, Input, Space, message } from 'antd';
 import React from 'react';
-import { checkPassword } from '../service/user';
+import { changePassword } from '../service/user';
+import { onResponse } from '../util/response';
 
 const SubmitButton = ({ form }) => {
   const [submittable, setSubmittable] = React.useState(false);
@@ -29,25 +30,23 @@ const SubmitButton = ({ form }) => {
 function PasswordForm() {
     const [form] = Form.useForm();
 
-    const validateOldPassword = async (_, value) => {
-        try {
-            if (await checkPassword(value)) {
-                return Promise.resolve();
-            } else {
-                return Promise.reject();
-            }
-        } catch (error) {
-            return Promise.reject(new Error('服务器错误'));
-        }
-    };
+    const [messageApi, contextHolder] = message.useMessage();
+
+    const onSubmit = async (values) => {
+        const { old_password, new_password } = values;
+        const res = await changePassword(old_password, new_password);
+        onResponse(res, messageApi, null, null);
+    }
 
     return (
     <Form 
       form={form} 
       name="validateOnly" 
       layout="vertical" 
-      autoComplete="off" 
+      autoComplete="off"
+      onFinish={onSubmit} 
     >
+      {contextHolder}
       <Form.Item
         name="old_password"
         label="请输入原密码"
@@ -57,13 +56,13 @@ function PasswordForm() {
             message: '请输入原密码',
           },
           {
-            validator: validateOldPassword,
             message: '原密码错误',
           }
         ]}
       >
-        <Input />
+        <Input maxLength={255} type='password'/>
       </Form.Item>
+
       <Form.Item
         name="new_password"
         label="请输入新密码"
@@ -74,8 +73,33 @@ function PasswordForm() {
           },
         ]}
       >
-        <Input />
+        <Input type='password' maxLength={255}/>
       </Form.Item>
+
+      <Form.Item
+        name="confirm"
+        dependencies={['new_password']}
+        label="再次确认新密码"
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: '请确认新密码!',
+          },
+
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('new_password') === value) {
+                return Promise.resolve();
+              }
+                return Promise.reject(new Error('两次密码输入不一致!'));
+              },
+          }),
+        ]}
+      >
+        <Input type='password' maxLength={255}/>
+      </Form.Item>
+
       <Form.Item>
         <Space>
           <SubmitButton form={form} />
