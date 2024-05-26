@@ -1,5 +1,6 @@
 import { DatePicker } from 'antd';
 import React, { useEffect, useState } from 'react';
+import DataTable from '../components/data_table';
 import RankChart from '../components/rank_chart';
 import { RankStatistics } from '../components/statistics';
 import '../css/global.css';
@@ -83,45 +84,47 @@ function WebData(){
 }
 
 function MyData(){
-    const [orders,setOrders] = useState([]);
+    const [datas, setDatas] = useState([]);
+
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
 
     useEffect(() => {
         setUserRankData();
-    }, []);
+    }, [startTime, endTime]);
 
     const setUserRankData = async () => {
-        let allOrders = await getUserRankData();
-        if (allOrders) {
-            setOrders(allOrders);
+        let allDatas = await getUserRankData(startTime, endTime);
+        if (allDatas) {
+            setDatas(allDatas);
         }
     }
 
-    const dataOrder = orders.map(order => ({
-        y: order.number,
-        x: order.book.title,
-    }));
-
     const onChange = (value, dateString) => {
-        console.log('Selected Time: ', value);
         console.log('Formatted Selected Time: ', dateString);
-      };
-      const onOk = (value) => {
+        setStartTime(dateString[0]);
+        setEndTime(dateString[1]);
+    };
+
+    const onOk = (value) => {
         console.log('onOk: ', value);
-      };
+    };
 
     return (
         <div className='content-background'>
             <div className='content-container'>
+                <h2>书籍购买数据统计</h2>
                 <RangePicker
                     showTime={{
                         format: 'HH:mm',
                     }}
-                    format="YYYY-MM-DD HH:mm"
+                    format="YYYY-MM-DDTHH:mm:ss"
                     onChange={onChange}
                     onOk={onOk}
-                    />
-                {orders.length !== 0 && <RankChart data={dataOrder} yTitle={'购买量'} title={"个人购买数据统计"}/>}
-                <RankStatistics orders={orders}/>
+                />
+                {datas.length !== 0 ? <DataTable datas={datas}/>
+                    : <div>所选时间段内无购买数据</div>}
+                <RankStatistics orders={datas}/>
             </div>
         </div>
     );

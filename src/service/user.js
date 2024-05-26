@@ -73,26 +73,17 @@ export async function getAllUsers(){
     return result;
 }
 
-export async function getUserRankData(){
-    let result;
+export async function getUserRankData(startTime, endTime){
+    const url = `${PREFIX}/orders/statistics?startTime=${startTime}&endTime=${endTime}`;
+    let res;
 
-    result = [];
-
-    for(var i = 1; i <= 10; i++){
-        result.push({
-            id : i,
-            book : {
-              id : i,
-              title: `Title ${i}`,
-              author: `author ${i}`,
-              description: `Description ${i}`,
-              price: i * 4.5,
-              cover: `books/book${i}.jpg`,
-              sales: i,
-            },
-            number: i,
-        })
+    try {
+        res = await getJson(url);
+        console.log(res);
+    } catch (e) {
+        console.log(e);
+        res = null;
     }
 
-    return result;
+    return res;
 }

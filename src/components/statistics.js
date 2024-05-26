@@ -26,7 +26,7 @@ function CartStatistics({selectedRowKeys, books}) {
 
 function RankStatistics({orders}) {
   const totalBooks = orders.reduce((total, order) => total + order.number, 0);
-  const totalPrice = orders.reduce((total, order) => total + order.book.price * order.number, 0);
+  const totalPrice = orders.reduce((total, order) => total + order.price, 0);
 
     return (
       <h3>购书总本数：
