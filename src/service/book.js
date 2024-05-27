@@ -1,7 +1,7 @@
 import { PREFIX, getJson } from './common';
 
-export async function getAllBooks() {
-    const url = `${PREFIX}/books`;
+export async function getAllBooks(keyword) {
+    const url = `${PREFIX}/books?keyword=${keyword}`;
     let res;
 
     try {

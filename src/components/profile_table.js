@@ -85,25 +85,6 @@ function ProfileTable({info,showModal}) {
         onResponse(res, messageApi, null, null);
     }
 
-    // const uploadButton = (
-    //     <button
-    //       style={{
-    //         border: 0,
-    //         background: 'none',
-    //       }}
-    //       type="button"
-    //     >
-    //       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-    //       <div
-    //         style={{
-    //           marginTop: 8,
-    //         }}
-    //       >
-    //         Upload
-    //       </div>
-    //     </button>
-    // );
-
     return (
         <Form 
             form={form}
@@ -185,7 +166,7 @@ function ProfileTable({info,showModal}) {
 
                     <Form.Item
                         name="address"
-                        label="默认收货地址"
+                        label="住址"
                     >
                         <Input maxLength={100}/>
                     </Form.Item>

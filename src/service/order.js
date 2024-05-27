@@ -1,7 +1,7 @@
 import { DUMMY_RESPONSE, PREFIX, getJson, post } from './common';
 
-export async function getOrders() {
-  const url = `${PREFIX}/orders`;
+export async function getOrders(keyword) {
+  const url = `${PREFIX}/orders?keyword=${keyword}`;
   let orders;
 
   try {

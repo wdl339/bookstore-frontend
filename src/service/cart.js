@@ -1,7 +1,7 @@
 import { DUMMY_RESPONSE, PREFIX, del, getJson, post, put } from './common';
 
-export async function getCart() {
-    const url = `${PREFIX}/cart`;
+export async function getCart(keyword) {
+    const url = `${PREFIX}/cart?keyword=${keyword}`;
     let cart;
 
     try {

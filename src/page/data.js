@@ -76,7 +76,7 @@ function WebData(){
                 />
                 {books.length !== 0 ? <RankChart data={dataBook} yTitle={'销售量'} title={"热销榜"}/> : 
                     <div>所选时间段内热销榜无书</div>}
-                {users.length !== 0 ? <RankChart data={dataUser} yTitle={'购书量'} title={"消费榜"}/> :
+                {users.length !== 0 ? <RankChart data={dataUser} yTitle={'购书本数'} title={"消费榜"}/> :
                     <div>所选时间段内消费榜无用户</div>}
             </div>
         </div>
