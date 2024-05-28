@@ -62,9 +62,23 @@ const Navbar = () => {
       ],
     },
     {
-      label: <Link to={"/manage"} className='navbarLabel'>{"管理"}</Link>,
+      label: <Link className='navbarLabel'>{"管理"}</Link>,
       key: 'manage',
       icon: <UsergroupAddOutlined />,
+      children: [
+        {
+          label: <Link to={"/userManage"}>{'用户管理'}</Link>,
+          key: 'userManage',
+        },
+        {
+          label: <Link to={"/orderManage"}>{'订单管理'}</Link>,
+          key: 'orderManage',
+        },
+        {
+          label: <Link to={"/bookManage"}>{'书籍管理'}</Link>,
+          key: 'bookManage',
+        },
+      ],
     },
     {
       label: <Link to={"/profile"} className='navbarLabel'>{"个人"}</Link>,

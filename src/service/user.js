@@ -56,22 +56,20 @@ export async function getAvatar() {
     return res;
 }
 
-export async function getAllUsers(){
-    let result;
-
-    result = [];
-
-    for(var i = 1; i <= 10; i++){
-        result.push({
-            id : i,
-            nickname: `Sir ${i}`,
-            balance: i * 100,
-            isBanned: false,
-        })
+export async function getAllUsers(keyword) {
+    const url = `${PREFIX}/user/all?keyword=${keyword}`;
+    let users;
+  
+    try {
+        users = await getJson(url);
+        console.log(users);
+    } catch (e) {
+        console.log(e);
+        users = [];
     }
-
-    return result;
-}
+  
+    return users;
+  }
 
 export async function getUserRankData(startTime, endTime){
     const url = `${PREFIX}/orders/statistics?startTime=${startTime}&endTime=${endTime}`;

@@ -1,20 +1,24 @@
 import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
-import ManageTable from '../components/manage_table';
+import { useSearchParams } from 'react-router-dom';
+import UserManageTable from '../components/user_manage_table';
 import '../css/global.css';
 import { getAllUsers } from '../service/user';
 
 const { Search } = Input;
 
-function Manage (){
+function UserManage (){
   const [users,setUsers] = useState([]);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const keyword = searchParams.get("keyword") || "";
 
   useEffect(() => {
     setAllUsers();
   }, []);
 
   const setAllUsers = async () => {
-    let allUsers = await getAllUsers();
+    let allUsers = await getAllUsers(keyword);
     if (allUsers) {
       setUsers(allUsers);
     }
@@ -22,26 +26,33 @@ function Manage (){
 
   const onBan = (id) => {
     setUsers(users.map(user => 
-      (user.id === id) ? { ...user, isBanned: !user.isBanned } : user
+      (user.id === id) ? { ...user, ban: !user.ban } : user
     ));
   };
+
+  const onSearch = (keyword) => {
+    setSearchParams({
+      "keyword": keyword,
+    });
+  }
 
   return (
     <div className='content-background'>
         <div className='content-container'>
             <Search
                 placeholder="输入用户名查询"
+                onSearch={onSearch}
                 allowClear
                 enterButton="搜索"
                 size="large"
             />
             {users.length === 0 ? 
               <p>没有用户可管理（悲）</p> : 
-              <ManageTable users={users} onBan={onBan}/>
+              <UserManageTable users={users} onBan={onBan}/>
             }
         </div>
     </div>
   );
 };
 
-export default Manage;
+export default UserManage;

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import BookList from '../components/book_list';
 import "../css/global.css";
-import { getAllBooks } from '../service/book';
+import { getAllActiveBooks } from '../service/book';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -15,7 +15,7 @@ function Home() {
     }, [searchParams]);
 
     const setAllBooks = async () => {
-        let allBooks = await getAllBooks(keyword);
+        let allBooks = await getAllActiveBooks(keyword);
         if (allBooks) {
             setData(allBooks.books);
         }

@@ -1,14 +1,13 @@
-import { DatePicker, Input } from 'antd';
+import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import OrderTable from '../components/order_table';
 import '../css/global.css';
-import { getOrders } from '../service/order';
-const { RangePicker } = DatePicker;
+import { getAllOrders } from '../service/order';
 
 const { Search } = Input;
 
-function Order (){
+function OrderManage(){
   const [orders, serOrders] = useState([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,7 +18,7 @@ function Order (){
   }, [searchParams]);
 
   const setOrderItems = async () => {
-    let orders = await getOrders(keyword);
+    let orders = await getAllOrders(keyword);
     if (orders) {
       serOrders(orders);
     }
@@ -42,15 +41,6 @@ function Order (){
                 size="large"
             />
 
-            {/* <RangePicker
-              showTime={{
-                format: 'HH:mm',
-              }}
-              format="YYYY-MM-DD HH:mm"
-              onChange={onChange}
-              onOk={onOk}
-            /> */}
-
             {orders.length ? 
               <OrderTable orders={orders}/>
               :
@@ -61,4 +51,4 @@ function Order (){
   );
 };
 
-export default Order;
+export default OrderManage;

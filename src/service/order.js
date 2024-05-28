@@ -14,6 +14,20 @@ export async function getOrders(keyword) {
   return orders;
 }
 
+export async function getAllOrders(keyword) {
+  const url = `${PREFIX}/orders/all?keyword=${keyword}`;
+  let orders;
+
+  try {
+      orders = await getJson(url);
+  } catch (e) {
+      console.log(e);
+      orders = [];
+  }
+
+  return orders;
+}
+
 export async function submitOrderFromCart(data) {
   const url = `${PREFIX}/orders`;
   let res;

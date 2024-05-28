@@ -29,7 +29,7 @@ function BookOrderCard ({item}) {
                     {item.book.title}
                 </Link>
                 <br></br>
-                <p>{`${item.book.price / 100}元 共${item.number}本`}</p>
+                <p>{`${item.price / 100}元 共${item.number}本`}</p>
             </div>
         </div>
     );
