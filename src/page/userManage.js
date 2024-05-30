@@ -1,14 +1,16 @@
-import { Input } from 'antd';
+import { Input, message } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import UserManageTable from '../components/user_manage_table';
 import '../css/global.css';
-import { getAllUsers } from '../service/user';
+import { changeUserBanStatus, getAllUsers } from '../service/user';
+import { onResponse } from '../util/response';
 
 const { Search } = Input;
 
 function UserManage (){
   const [users,setUsers] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
@@ -24,10 +26,14 @@ function UserManage (){
     }
   }
 
-  const onBan = (id) => {
-    setUsers(users.map(user => 
-      (user.id === id) ? { ...user, ban: !user.ban } : user
-    ));
+  const onBan = async(id, status) => {
+    const res = await changeUserBanStatus(id, status);
+    onResponse(res, messageApi, null, null);
+    if (res.ok) {
+      setUsers(users.map(user => 
+        (user.id === id) ? { ...user, ban: status } : user
+      ));
+    }
   };
 
   const onSearch = (keyword) => {
@@ -39,6 +45,7 @@ function UserManage (){
   return (
     <div className='content-background'>
         <div className='content-container'>
+          {contextHolder}
             <Search
                 placeholder="输入用户名查询"
                 onSearch={onSearch}

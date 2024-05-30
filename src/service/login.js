@@ -1,8 +1,11 @@
+import { enryptPassword } from "../util/crypto";
 import { PREFIX, post, put } from "./common";
 
 export async function register(name, password, phone, email) {
     const url = `${PREFIX}/user/register`;
     let result;
+
+    password = await enryptPassword(password);
 
     try {
         result = await post(url, { name, password, phone, email });
@@ -20,6 +23,8 @@ export async function register(name, password, phone, email) {
 export async function login(username, password) {
     const url = `${PREFIX}/user/login`;
     let result;
+
+    password = await enryptPassword(password);
 
     try {
         result = await post(url, { username, password });

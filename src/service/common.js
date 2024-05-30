@@ -6,12 +6,7 @@ export async function getJson(url) {
         },
         credentials: "include",
     });
-    // console.log(res);
-    if (res.status === 401) {
-        console.log('Unauthorized');
-        window.location.href = '/login';
-        throw new Error('Unauthorized');
-    }
+    checkStatus(res);
     return res.json();
 }
 
@@ -23,10 +18,7 @@ export async function get(url) {
         },
         credentials: "include",
     });
-    if (res.status === 401) {
-        window.location.href = '/login';
-        throw new Error('Unauthorized');
-    }
+    checkStatus(res);
     return res;
 }
 
@@ -39,10 +31,7 @@ export async function put(url, data){
         body: JSON.stringify(data),
         credentials: "include",
     });
-    if (res.status === 401) {
-        window.location.href = '/login';
-        throw new Error('Unauthorized');
-    }
+    checkStatus(res);
     return res.json();
 
 }
@@ -57,10 +46,7 @@ export async function post(url, data) {
         body: JSON.stringify(data),
         credentials: "include",
     });
-    if (res.status === 401) {
-        window.location.href = '/login';
-        throw new Error('Unauthorized');
-    }
+    checkStatus(res);
     return res.json();
 }
 
@@ -73,11 +59,18 @@ export async function del(url, data) {
         body: JSON.stringify(data),
         credentials: "include", 
     });
+    checkStatus(res);
+    return res.json();
+}
+
+export async function checkStatus(res) {
     if (res.status === 401) {
         window.location.href = '/login';
-        throw new Error('Unauthorized');
+        // throw new Error('Unauthorized');
+    } else if (res.status === 403) {
+        window.location.href = '/login';
+        // throw new Error('Forbidden');
     }
-    return res.json();
 }
 
 export const BASEURL = 'http://localhost:8080';

@@ -47,7 +47,7 @@ function UserManageTable({users, onBan}) {
                 <Button 
                     type="primary"
                     danger={!ban}
-                    onClick={() => onBan(record.id)}
+                    onClick={() => onBan(record.id,!ban)}
                     shape="round"
                 >
                     {ban ? '解禁' : '禁用'}

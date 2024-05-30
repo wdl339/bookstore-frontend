@@ -3,13 +3,14 @@ import { Avatar, Col, Menu, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../css/navbar.css';
-import { getAvatar } from '../service/user';
+import { getAvatar, getIsAdmin } from '../service/user';
 
 
 const Navbar = () => {
   const location = useLocation();
   const current = location.pathname.split('/');
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const getUserAvatar = async () => {
     if (window.location.pathname === '/login' || window.location.pathname === '/register') {
@@ -21,16 +22,24 @@ const Navbar = () => {
     }
   };
 
+  const getUserIsAdmin = async () => {
+    if (window.location.pathname === '/login' || window.location.pathname === '/register') {
+      return;
+    }
+    const res = await getIsAdmin();
+    console.log(res);
+    if (res) {
+      setIsAdmin(res.isAdmin);
+    } 
+  }
+
   useEffect(() => {
     getUserAvatar();
+    getUserIsAdmin();
   }, []);
 
-  const items = [
-    // {
-    //   label: <Link to={"/login"} className='navbarLabel'>{"登录"}</Link>,
-    //   key: 'login',
-    //   icon: <LoginOutlined />,
-    // },
+  var items = isAdmin ? 
+  [
     {
       label: <Link to={"/"} className='navbarLabel'>{"首页"}</Link>,
       key: '',
@@ -85,8 +94,43 @@ const Navbar = () => {
       key: 'profile',
       icon: <UserOutlined />,
     }
-  ];
-
+  ] : [
+    {
+      label: <Link to={"/"} className='navbarLabel'>{"首页"}</Link>,
+      key: '',
+      icon: <HomeOutlined />,
+    },
+    {
+      label: <Link to={"/cart"} className='navbarLabel'>{"购物车"}</Link>,
+      key: 'cart',
+      icon: <ShoppingCartOutlined />,
+    },
+    {
+      label: <Link to={"/order"} className='navbarLabel'>{"订单"}</Link>,
+      key: 'order',
+      icon: <PayCircleOutlined />,
+    },
+    {
+      label: <Link className='navbarLabel'>{"统计"}</Link>,
+      key: 'data',
+      icon: <BarChartOutlined />,
+      children: [
+        {
+          label: <Link to={"/webData"}>{'全站'}</Link>,
+          key: 'webData',
+        },
+        {
+          label: <Link to={"/myData"}>{'用户'}</Link>,
+          key: 'myData',
+        },
+      ],
+    },
+    {
+      label: <Link to={"/profile"} className='navbarLabel'>{"个人"}</Link>,
+      key: 'profile',
+      icon: <UserOutlined />,
+    }
+  ]
 
   return (
     <Row justify="space-between">

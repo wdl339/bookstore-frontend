@@ -43,7 +43,7 @@ export async function getBookById(id) {
 }
 
 export async function createBook(data) {
-    const url = `${PREFIX}/books`;
+    const url = `${PREFIX}/books/create`;
     let res;
 
     try {
@@ -71,7 +71,7 @@ export async function hideBook(id) {
 }
 
 export async function updateBook(id, data) {
-    const url = `${PREFIX}/books/${id}`;
+    const url = `${PREFIX}/books/edit/${id}`;
     let res;
 
     try {
