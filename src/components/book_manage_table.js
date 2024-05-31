@@ -1,7 +1,7 @@
 import { Button, Table } from 'antd';
 import React from 'react';
 
-function BookManageTable({books}) {
+function BookManageTable({books, pageSize, current, total, onPageChange}) {
 
     const columns = [
         {
@@ -66,7 +66,10 @@ function BookManageTable({books}) {
             columns={columns} 
             dataSource={books}
             pagination={{ 
-                pageSize: 5, 
+                pageSize: pageSize,
+                current: current,
+                total: total,
+                onChange: onPageChange,
                 position: ['bottomCenter']
             }} 
         />

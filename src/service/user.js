@@ -60,8 +60,8 @@ export async function getAvatar() {
     return res;
 }
 
-export async function getAllUsers(keyword) {
-    const url = `${PREFIX}/user/all?keyword=${keyword}`;
+export async function getAllUsers(keyword, page, size) {
+    const url = `${PREFIX}/user/all?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
     let users;
   
     try {

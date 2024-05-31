@@ -1,28 +1,28 @@
 import { DUMMY_RESPONSE, PREFIX, getJson, post } from './common';
 
-export async function getOrders(keyword) {
-  const url = `${PREFIX}/orders?keyword=${keyword}`;
+export async function getOrders(keyword, page, size) {
+  const url = `${PREFIX}/orders?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
   let orders;
 
   try {
       orders = await getJson(url);
   } catch (e) {
       console.log(e);
-      orders = [];
+      orders = null;
   }
 
   return orders;
 }
 
-export async function getAllOrders(keyword) {
-  const url = `${PREFIX}/orders/all?keyword=${keyword}`;
+export async function getAllOrders(keyword, page, size) {
+  const url = `${PREFIX}/orders/all?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
   let orders;
 
   try {
       orders = await getJson(url);
   } catch (e) {
       console.log(e);
-      orders = [];
+      orders = null;
   }
 
   return orders;

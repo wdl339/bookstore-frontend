@@ -3,7 +3,7 @@ import React from 'react';
 import { getTimeStr } from '../util/time';
 import { BookOrderCardList } from './book_cart_card';
 
-function OrderTable({orders}) {
+function OrderTable({orders, pageSize, current, total, onPageChange}) {
 
     const columns = [
         {
@@ -44,7 +44,10 @@ function OrderTable({orders}) {
             columns={columns} 
             dataSource={orders} 
             pagination={{ 
-                pageSize: 5, 
+                pageSize: pageSize,
+                current: current,
+                total: total,
+                onChange: onPageChange,
                 position: ['bottomCenter']
             }} 
         />

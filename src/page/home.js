@@ -7,37 +7,54 @@ import { getAllActiveBooks } from '../service/book';
 
 function Home() {
     const [data, setData] = useState([]);
+    const [total, setTotal] = useState(0);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const keyword = searchParams.get("keyword") || "";
+    const pageIndex = searchParams.get("pageIndex") != null ? Number.parseInt(searchParams.get("pageIndex")) : 0;
+    const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 10;
 
     useEffect(() => {
         setAllBooks();
     }, [searchParams]);
 
     const setAllBooks = async () => {
-        let allBooks = await getAllActiveBooks(keyword);
+        let allBooks = await getAllActiveBooks(keyword, pageIndex, pageSize);
         if (allBooks) {
             setData(allBooks.books);
+            setTotal(allBooks.total);
         }
     }
 
     const onSearch = (keyword) => {
         setSearchParams({
             "keyword": keyword,
+            "pageIndex": 0,
+            "pageSize": 10
         });
     };
+
+    const onPageChange = (page) => {
+        setSearchParams({ ...searchParams, pageIndex: page - 1 });
+    }
 
     return (
         <div className="content-background">    
             <div className='content-container'>
-              <Search 
-                  placeholder="输入书名查询"
-                  onSearch={onSearch}
-                  allowClear
-                  enterButton="搜索"
-                  size="large"
-              />
-              <BookList data={data}/>
+                <Search 
+                    placeholder="输入书名查询"
+                    onSearch={onSearch}
+                    allowClear
+                    enterButton="搜索"
+                    size="large"
+                />
+                <BookList 
+                    data={data}
+                    pageSize={pageSize}
+                    current={pageIndex + 1}
+                    total={total}
+                    onPageChange={onPageChange}
+                />
             </div>
         </div>
     );

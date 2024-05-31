@@ -1,7 +1,7 @@
 import { Button, Table } from 'antd';
 import React from 'react';
 
-function UserManageTable({users, onBan}) {
+function UserManageTable({users, onBan, pageSize, current, total, onPageChange}) {
     const columns = [
         {
             title: 'ID',
@@ -61,7 +61,10 @@ function UserManageTable({users, onBan}) {
             columns={columns} 
             dataSource={users} 
             pagination={{ 
-                pageSize: 10, 
+                pageSize: pageSize,
+                current: current,
+                total: total,
+                onChange: onPageChange,
                 position: ['bottomCenter']
             }} 
         />

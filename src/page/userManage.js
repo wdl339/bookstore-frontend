@@ -10,19 +10,23 @@ const { Search } = Input;
 
 function UserManage (){
   const [users,setUsers] = useState([]);
+  const [total, setTotal] = useState(0);
   const [messageApi, contextHolder] = message.useMessage();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
+  const pageIndex = searchParams.get("pageIndex") != null ? Number.parseInt(searchParams.get("pageIndex")) : 0;
+  const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 5;
 
   useEffect(() => {
     setAllUsers();
-  }, []);
+  }, [searchParams]);
 
   const setAllUsers = async () => {
-    let allUsers = await getAllUsers(keyword);
+    let allUsers = await getAllUsers(keyword, pageIndex, pageSize);
     if (allUsers) {
-      setUsers(allUsers);
+      setUsers(allUsers.users);
+      setTotal(allUsers.total);
     }
   }
 
@@ -39,7 +43,13 @@ function UserManage (){
   const onSearch = (keyword) => {
     setSearchParams({
       "keyword": keyword,
+      "pageIndex": 0,
+      "pageSize": 5
     });
+  }
+
+  const onPageChange = (page) => {
+    setSearchParams({ ...searchParams, pageIndex: page - 1 });
   }
 
   return (
@@ -55,7 +65,14 @@ function UserManage (){
             />
             {users.length === 0 ? 
               <p>没有用户可管理（悲）</p> : 
-              <UserManageTable users={users} onBan={onBan}/>
+              <UserManageTable 
+                users={users} 
+                onBan={onBan}
+                pageSize={pageSize}
+                current={pageIndex + 1}
+                total={total}
+                onPageChange={onPageChange}
+              />
             }
         </div>
     </div>

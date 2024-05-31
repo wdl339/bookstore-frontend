@@ -1,7 +1,7 @@
 import { List } from 'antd';
 import BookCard from './book_card';
 
-function BookList({data}) {
+function BookList({data, pageSize, current, total, onPageChange}) {
   return (
         <List
             grid={{
@@ -15,7 +15,10 @@ function BookList({data}) {
                 </List.Item>
             )}
             pagination={{ 
-                pageSize: 10 , 
+                pageSize: pageSize,
+                current: current,
+                total: total,
+                onChange: onPageChange,
                 position: 'bottom', 
                 align: 'center'
             }}

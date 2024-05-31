@@ -9,25 +9,35 @@ const { Search } = Input;
 
 function OrderManage(){
   const [orders, serOrders] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
+  const pageIndex = searchParams.get("pageIndex") != null ? Number.parseInt(searchParams.get("pageIndex")) : 0;
+  const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 5;
 
   useEffect(() => {
     setOrderItems();
   }, [searchParams]);
 
   const setOrderItems = async () => {
-    let orders = await getAllOrders(keyword);
+    let orders = await getAllOrders(keyword, pageIndex, pageSize);
     if (orders) {
-      serOrders(orders);
+      serOrders(orders.orders);
+      setTotal(orders.total);
     }
   }
 
   const onSearch = (keyword) => {
     setSearchParams({
       "keyword": keyword,
+      "pageIndex": 0,
+      "pageSize": 5
     });
+  }
+
+  const onPageChange = (page) => {
+    setSearchParams({ ...searchParams, pageIndex: page - 1 });
   }
 
   return (
@@ -42,7 +52,13 @@ function OrderManage(){
             />
 
             {orders.length ? 
-              <OrderTable orders={orders}/>
+              <OrderTable 
+                  orders={orders}
+                  pageSize={pageSize}
+                  current={pageIndex + 1}
+                  total={total}
+                  onPageChange={onPageChange}
+              />
               :
               <p>暂无订单</p>
             }

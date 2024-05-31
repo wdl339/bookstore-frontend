@@ -1,16 +1,17 @@
 import { Button, Col, Input, Modal, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import BookCreateTable from '../components/book_create_table';
 import BookManageTable from '../components/book_manage_table';
 import '../css/global.css';
 import { getAllBooks } from '../service/book';
-import BookCreateTable from '../components/book_create_table';
 
 const { Search } = Input;
 
 function BookManage (){
   const [books, setBooks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const showModal = () => {
       setIsModalOpen(true);
@@ -21,22 +22,31 @@ function BookManage (){
 
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get("keyword") || "";
+  const pageIndex = searchParams.get("pageIndex") != null ? Number.parseInt(searchParams.get("pageIndex")) : 0;
+  const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 5;
 
   useEffect(() => {
     setAllBooks();
   }, [searchParams]);
 
   const setAllBooks = async () => {
-    let books = await getAllBooks(keyword);
+    let books = await getAllBooks(keyword, pageIndex, pageSize);
     if (books) {
       setBooks(books.books);
+      setTotal(books.total);
     }
   }
 
   const onSearch = (keyword) => {
     setSearchParams({
       "keyword": keyword,
+      "pageIndex": 0,
+      "pageSize": 5
     });
+  }
+
+  const onPageChange = (page) => {
+    setSearchParams({ ...searchParams, pageIndex: page - 1 });
   }
 
   return (
@@ -74,7 +84,13 @@ function BookManage (){
             </Row>
 
             {books.length ? 
-              <BookManageTable books={books}/>
+              <BookManageTable 
+                books={books}
+                pageSize={pageSize}
+                current={pageIndex + 1}
+                total={total}
+                onPageChange={onPageChange}
+              />
               :
               <p>暂无订单</p>
             }
