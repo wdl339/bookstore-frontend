@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import BookList from '../components/book_list';
 import "../css/global.css";
 import { getAllActiveBooks } from '../service/book';
+import SearchBar from '../components/search_bar';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -41,13 +42,7 @@ function Home() {
     return (
         <div className="content-background">    
             <div className='content-container'>
-                <Search 
-                    placeholder="输入书名查询"
-                    onSearch={onSearch}
-                    allowClear
-                    enterButton="搜索"
-                    size="large"
-                />
+                <SearchBar onSearch={onSearch}/>
                 <BookList 
                     data={data}
                     pageSize={pageSize}

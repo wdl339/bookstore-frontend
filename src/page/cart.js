@@ -2,6 +2,7 @@ import { Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import CartBody from '../components/cart_body';
+import SearchBar from '../components/search_bar';
 import '../css/cart.css';
 import '../css/global.css';
 import { getCart } from '../service/cart';
@@ -33,13 +34,7 @@ function Cart (){
   return (
     <div className='content-background'>
         <div className='content-container'>
-            <Search
-                placeholder="输入书名查询"
-                onSearch={onSearch}
-                allowClear
-                enterButton="搜索"
-                size="large"
-            />
+            <SearchBar onSearch={onSearch}/>
             <CartBody books={books} setBooks={setBooks} setCartItems={setCartItems}/>
         </div>
     </div>

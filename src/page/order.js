@@ -1,12 +1,11 @@
-import { DatePicker, Input } from 'antd';
+import { Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import OrderTable from '../components/order_table';
+import SearchBar from '../components/search_bar';
+import TimeRangePicker from '../components/time_range_picker';
 import '../css/global.css';
 import { getOrders } from '../service/order';
-const { RangePicker } = DatePicker;
-
-const { Search } = Input;
 
 function Order (){
   const [orders, serOrders] = useState([]);
@@ -57,22 +56,16 @@ function Order (){
   return (
     <div className='content-background'>
         <div className='content-container'>
-            <Search
-                placeholder="输入书名查询"
-                onSearch={onSearch}
-                allowClear
-                enterButton="搜索"
-                size="large"
-            />
 
-            <RangePicker
-                showTime={{
-                    format: 'HH:mm:ss',
-                }}
-                format="YYYY-MM-DDTHH:mm:ss"
-                onChange={onTimeChange}
-                onOk={onTimeOk}
-            />
+            <Row>
+                <Col span={12}>
+                  <SearchBar onSearch={onSearch} />
+                </Col>
+                <Col span={1}/>
+                <Col span={10}>
+                  <TimeRangePicker onTimeChange={onTimeChange} onTimeOk={onTimeOk}/>
+                </Col>
+            </Row>
 
             {orders.length ? 
               <OrderTable 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import BookCreateTable from '../components/book_create_table';
 import BookManageTable from '../components/book_manage_table';
+import SearchBar from '../components/search_bar';
 import '../css/global.css';
 import { getAllBooks } from '../service/book';
 
@@ -61,15 +62,10 @@ function BookManage (){
             >
               <BookCreateTable/>
             </Modal>
+
             <Row>
                 <Col span={20}>
-                  <Search
-                      placeholder="输入书名查询"
-                      onSearch={onSearch}
-                      allowClear
-                      enterButton="搜索"
-                      size="large"
-                  />
+                  <SearchBar onSearch={onSearch} />
                 </Col>
                 <Col span={4}>
                   <Button

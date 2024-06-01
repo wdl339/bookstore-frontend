@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import DataTable from '../components/data_table';
 import RankChart from '../components/rank_chart';
 import { RankStatistics } from '../components/statistics';
+import TimeRangePicker from '../components/time_range_picker';
 import '../css/global.css';
 import { getTopBooks, getTopUsers } from '../service/rank';
 import { getUserRankData } from '../service/user';
-const { RangePicker } = DatePicker;
 
 function WebData(){
     const [books, setBooks] = useState([]);
@@ -66,14 +66,7 @@ function WebData(){
     return (
         <div className='content-background'>
             <div className='content-container'>
-                <RangePicker
-                    showTime={{
-                        format: 'HH:mm:ss',
-                    }}
-                    format="YYYY-MM-DDTHH:mm:ss"
-                    onChange={onChange}
-                    onOk={onOk}
-                />
+                <TimeRangePicker onTimeChange={onChange} onTimeOk={onOk}/>
                 {books.length !== 0 ? <RankChart data={dataBook} yTitle={'销售量'} title={"热销榜"}/> : 
                     <div>所选时间段内热销榜无书</div>}
                 {users.length !== 0 ? <RankChart data={dataUser} yTitle={'购书本数'} title={"消费榜"}/> :
@@ -114,14 +107,7 @@ function MyData(){
         <div className='content-background'>
             <div className='content-container'>
                 <h2>书籍购买数据统计</h2>
-                <RangePicker
-                    showTime={{
-                        format: 'HH:mm',
-                    }}
-                    format="YYYY-MM-DDTHH:mm:ss"
-                    onChange={onChange}
-                    onOk={onOk}
-                />
+                <TimeRangePicker onTimeChange={onChange} onTimeOk={onOk}/>
                 {datas.length !== 0 ? <DataTable datas={datas}/>
                     : <div>所选时间段内无购买数据</div>}
                 <RankStatistics orders={datas}/>
