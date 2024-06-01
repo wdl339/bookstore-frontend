@@ -1,7 +1,7 @@
 import { DUMMY_RESPONSE, PREFIX, getJson, post } from './common';
 
-export async function getOrders(keyword, page, size) {
-  const url = `${PREFIX}/orders?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
+export async function getOrders(keyword, page, size, startTime, endTime) {
+  const url = `${PREFIX}/orders?keyword=${keyword}&pageIndex=${page}&pageSize=${size}&startTime=${startTime}&endTime=${endTime}`;
   let orders;
 
   try {
@@ -14,8 +14,8 @@ export async function getOrders(keyword, page, size) {
   return orders;
 }
 
-export async function getAllOrders(keyword, page, size) {
-  const url = `${PREFIX}/orders/all?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
+export async function getAllOrders(keyword, page, size, startTime, endTime) {
+  const url = `${PREFIX}/orders/all?keyword=${keyword}&pageIndex=${page}&pageSize=${size}&startTime=${startTime}&endTime=${endTime}`;
   let orders;
 
   try {

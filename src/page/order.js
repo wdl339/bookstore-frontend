@@ -17,12 +17,15 @@ function Order (){
   const pageIndex = searchParams.get("pageIndex") != null ? Number.parseInt(searchParams.get("pageIndex")) : 0;
   const pageSize = searchParams.get("pageSize") != null ? Number.parseInt(searchParams.get("pageSize")) : 5;
 
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+
   useEffect(() => {
     setOrderItems();
-  }, [searchParams]);
+  }, [searchParams, startTime, endTime]);
 
   const setOrderItems = async () => {
-    let orders = await getOrders(keyword, pageIndex, pageSize);
+    let orders = await getOrders(keyword, pageIndex, pageSize, startTime, endTime);
     if (orders) {
       serOrders(orders.orders);
       setTotal(orders.total);
@@ -41,6 +44,16 @@ function Order (){
     setSearchParams({ ...searchParams, pageIndex: page - 1 });
   }
 
+  const onTimeChange = (value, dateString) => {
+    console.log('Formatted Selected Time: ', dateString);
+    setStartTime(dateString[0]);
+    setEndTime(dateString[1]);
+  };
+
+  const onTimeOk = (value) => {
+      console.log('onOk: ', value);
+  };
+
   return (
     <div className='content-background'>
         <div className='content-container'>
@@ -50,6 +63,15 @@ function Order (){
                 allowClear
                 enterButton="搜索"
                 size="large"
+            />
+
+            <RangePicker
+                showTime={{
+                    format: 'HH:mm:ss',
+                }}
+                format="YYYY-MM-DDTHH:mm:ss"
+                onChange={onTimeChange}
+                onOk={onTimeOk}
             />
 
             {orders.length ? 
