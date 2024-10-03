@@ -1,16 +1,16 @@
-export async function onResponse(res, messageApi, onSuccess, onFail) {
+export async function onResponse(res, messageApi, onSuccess, onFail, duration = 0.5) {
     if (res.ok) {
         await messageApi.open({
             type: 'success',
             content: res.message,
-            duration: 0.5,
+            duration: duration,
         });
         onSuccess?.();
     } else {
         await messageApi.open({
             type: 'error',
             content: res.message,
-            duration: 0.5,
+            duration: duration,
           });
         onFail?.();
     }

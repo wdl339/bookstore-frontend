@@ -21,7 +21,7 @@ export async function register(name, password, phone, email) {
 
 
 export async function login(username, password) {
-    const url = `${PREFIX}/user/login`;
+    const url = `${PREFIX}/auth/login`;
     let result;
 
     password = await enryptPassword(password);
@@ -39,7 +39,7 @@ export async function login(username, password) {
 }
 
 export async function logout() {
-    const url = `${PREFIX}/user/logout`;
+    const url = `${PREFIX}/auth/logout`;
     let result;
 
     try {

@@ -69,7 +69,7 @@ function ProfileTable({info,showModal}) {
 
     const logoutUser = async () => {
         logout().then(result => {
-            onResponse(result, messageApi, onLogoutSuccess, null);
+            onResponse(result, messageApi, onLogoutSuccess, null, 2);
         });
     }
 
