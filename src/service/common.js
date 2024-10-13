@@ -74,6 +74,7 @@ export async function checkStatus(res) {
 }
 
 export const BASEURL = 'http://localhost:8080';
+export const WSPREFIX = 'ws://localhost:8080';
 export const PREFIX = `${BASEURL}/api`;
 export const DUMMY_RESPONSE = {
     ok: false,

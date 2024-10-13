@@ -4,7 +4,8 @@ import '../css/cart.css';
 import '../css/global.css';
 import { changeItemNumber, deleteItemFromCart } from '../service/cart';
 import { submitOrderFromCart } from '../service/order';
-import { onResponse } from '../util/response';
+import { onResponse, onStrResponse } from '../util/response';
+import { closeWebSocket } from '../util/websocket';
 import CartTable from './cart_table';
 import OrderForm from './order_form';
 import { CartStatistics } from './statistics';
@@ -60,6 +61,11 @@ function CartBody({books, setBooks, setCartItems}) {
         onResponse(res, messageApi, () => deleteOk(id), null);
       }
 
+      const handleOrderResult = (message) => {
+        onStrResponse(message, messageApi, setCartItems, null, 2);
+        closeWebSocket();
+      }
+
       const onSubmitOrder = async (values) => {
         const data = {
           receiver: values.receiver,
@@ -67,8 +73,13 @@ function CartBody({books, setBooks, setCartItems}) {
           address: values.address,
           itemIds: selectedRowKeys,
         };
-        let res = await submitOrderFromCart(data);
-        onResponse(res, messageApi, onOk, onCancel);
+        submitOrderFromCart(data, handleOrderResult).then(response => {
+          setIsModalOpen(false);
+          setSelectedRowKeys([]);
+          if (!response.ok){
+              alert('订单请求失败:', response.error);
+          }
+        });
       }
 
       const hasSelected = selectedRowKeys.length > 0;

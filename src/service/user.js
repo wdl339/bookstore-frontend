@@ -1,6 +1,10 @@
 import { enryptPassword } from '../util/crypto';
 import { DUMMY_RESPONSE, getJson, PREFIX, put } from './common';
 
+export function getLocalUsername() {
+    return localStorage.getItem('username');
+}
+
 export async function getProfile() {
     const url = `${PREFIX}/user/profile`;
     let me = null;

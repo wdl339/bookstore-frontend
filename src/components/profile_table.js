@@ -16,6 +16,7 @@ function ProfileTable({info,showModal}) {
     const [messageApi, contextHolder] = message.useMessage();
 
     const onLogoutSuccess = () => {
+        localStorage.removeItem('userId');
         window.location.href = '/login';
     }
 

@@ -7,7 +7,8 @@ import '../css/book_detail.css';
 import '../css/global.css';
 import { getBookById } from '../service/book';
 import { submitOrderFromBook } from '../service/order';
-import { onResponse } from '../util/response';
+import { onStrResponse } from '../util/response';
+import { closeWebSocket } from '../util/websocket';
 
 function BookDetail() {
     const [book, setBook] = useState();
@@ -32,6 +33,11 @@ function BookDetail() {
         }
     }
 
+    const handleOrderResult = (message) => {
+        onStrResponse(message, messageApi, null, null, 2);
+        closeWebSocket();
+    }
+
     const onSubmitOrder = async (values) => {
         const data = {
           receiver: values.receiver,
@@ -39,8 +45,12 @@ function BookDetail() {
           address: values.address,
           number: orderNum,
         };
-        let res = await submitOrderFromBook(data, id);
-        onResponse(res, messageApi, onOk, onOk);
+        await submitOrderFromBook(data, id, handleOrderResult).then(response => {
+            setIsModalOpen(false);
+            if (!response.ok) {
+                alert(response.message);
+            }
+        });
     }
 
     useEffect(() => {

@@ -3,19 +3,20 @@ import { Button, Form, Input, message } from 'antd';
 import React from 'react';
 import '../css/login.css';
 import { login } from '../service/login';
-import { onResponse } from '../util/response';
+import { onLoginResponse } from '../util/response';
 
 function LoginForm() {
     const [messageApi, contextHolder] = message.useMessage();
 
-    const onLoginSuccess = () => {
+    const onLoginSuccess = (userId) => {
+        localStorage.setItem('userId', userId);
         window.location.href = '/';
     }
 
     const onFinish = (values) => {
         const {username, password} = values;
         login(username, password).then(result => {
-            onResponse(result, messageApi, onLoginSuccess, null);
+            onLoginResponse(result, messageApi, onLoginSuccess(result.message), null);
         });
     }
 
