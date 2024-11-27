@@ -2,10 +2,10 @@ import { Input } from 'antd';
 import React from 'react';
 const { Search } = Input;
 
-function SearchBar({ onSearch }) {
+function SearchBar({ onSearch, placeholder = "输入书名查询" }) {
     return (
         <Search
-            placeholder="输入书名查询"
+            placeholder={placeholder}
             onSearch={onSearch}
             allowClear
             enterButton="搜索"

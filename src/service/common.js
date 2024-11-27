@@ -74,6 +74,7 @@ export async function checkStatus(res) {
 }
 
 export const BASEURL = 'http://localhost:8080';
+export const MICROURL = 'http://localhost:8081/microservice';
 export const WSPREFIX = 'ws://localhost:8080';
 export const PREFIX = `${BASEURL}/api`;
 export const DUMMY_RESPONSE = {

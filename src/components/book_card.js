@@ -24,6 +24,8 @@ function BookCard ({book}) {
                 title={book.title}
                 description={
                     <div>
+                        <div>{book.tag}</div>
+                        <div>{book.tag2}</div>
                         <MoneyCollectOutlined /> 
                         <span>{` ${book.price / 100}元`}</span>
                     </div>

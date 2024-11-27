@@ -1,7 +1,21 @@
-import { PREFIX, getJson, post, put } from './common';
+import { MICROURL, PREFIX, getJson, post, put } from './common';
 
 export async function getAllActiveBooks(keyword, page, size) {
     const url = `${PREFIX}/books?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
+    let res;
+
+    try {
+        res = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        res = null;
+    }
+
+    return res;
+}
+
+export async function getAllActiveBooksByTag(tag, page, size) {
+    const url = `${PREFIX}/books/tag?tag=${tag}&pageIndex=${page}&pageSize=${size}`;
     let res;
 
     try {
@@ -40,6 +54,20 @@ export async function getBookById(id) {
     }
 
     return book;
+}
+
+export async function getAuthorByTitle(title) {
+    const url = `${MICROURL}/getAuthorByTitle/${title}`;
+    let res;
+
+    try {
+        res = await getJson(url);
+    } catch (e) {
+        console.log(e);
+        res = "error";
+    }
+
+    return res;
 }
 
 export async function createBook(data) {
