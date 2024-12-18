@@ -1,18 +1,78 @@
-import { MICROURL, PREFIX, getJson, post, put } from './common';
+import { gql } from 'graphql-request';
+import { BASEURL, getJson, MICROURL, post, PREFIX, put } from './common';
+
+const GRAPHQL_ENDPOINT = `${BASEURL}/graphql`;
 
 export async function getAllActiveBooks(keyword, page, size) {
-    const url = `${PREFIX}/books?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
+    const query = gql`
+        query GetAllActiveBooks($keyword: String, $pageIndex: Int, $pageSize: Int) {
+            getAllActiveBooks(keyword: $keyword, pageIndex: $pageIndex, pageSize: $pageSize) {
+                total
+                books {
+                    id
+                    title
+                    author
+                    description
+                    isbn
+                    price
+                    cover
+                    sales
+                    stock
+                    active
+                    tag
+                    tag2
+                }
+            }
+        }
+    `;
+
+    const variables = {
+        keyword: keyword,
+        pageIndex: page,
+        pageSize: size
+    };
+
+    const body = JSON.stringify({
+        query,
+        variables
+    });
+
     let res;
 
     try {
-        res = await getJson(url);
+        res = await fetch(GRAPHQL_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body,
+            credentials: 'include'
+        });
+        res = await res.json();
     } catch (e) {
         console.log(e);
         res = null;
     }
 
+    res = res.data.getAllActiveBooks;
+
+    console.log(res);
+
     return res;
 }
+// export async function getAllActiveBooks(keyword, page, size) {
+//     const url = `${PREFIX}/books?keyword=${keyword}&pageIndex=${page}&pageSize=${size}`;
+//     let res;
+
+//     try {
+//         res = await getJson(url);
+//     } catch (e) {
+//         console.log(e);
+//         res = null;
+//     }
+
+//     return res;
+// }
 
 export async function getAllActiveBooksByTag(tag, page, size) {
     const url = `${PREFIX}/books/tag?tag=${tag}&pageIndex=${page}&pageSize=${size}`;
